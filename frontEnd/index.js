@@ -24,8 +24,12 @@ function displayProduct(product) {
     const templateElement = document.getElementById("articleTemplate")
     const cloneElement = document.importNode(templateElement.content, true)
 
-    cloneElement.getElementById("articleTitle").textContent = product.title
-    cloneElement.getElementById("articleDescription").textContent = product.description
 
-    document.getElementById("main").appendChild(cloneElement)
+    cloneElement.getElementById("articleTitle").textContent = product.name
+    let productPrice = product.price / 1000;
+    cloneElement.getElementById("articlePrice").textContent = (new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(productPrice))
+    let urlImage = product.imageUrl;
+    cloneElement.getElementById("articleImage").setAttribute("src", urlImage)
+
+    document.getElementById("box").appendChild(cloneElement)
 }

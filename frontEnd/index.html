@@ -12,39 +12,44 @@
     </head>
     <body>
         <!-- Header -->
-        <header class="container-fluid bg-light">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="index.html"><img src="img/logo.png" alt="Logo de la société Orinoco" /></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div id="navbarContent" class="collapse navbar-collapse">
-                    <ul class="navbar-nav">
-                        <li class=" nav-item active"><a class="nav-link" href="#">S'inscrire</a></li>
-                        <li class=" nav-item"><a class="nav-link" href="#">Mon compte</a></li>
-                        <li class=" nav-item"><a class="nav-link" href="shopping-cart.html"><i class="fas fa-shopping-cart"></i>Panier</a></li>
-                    </ul>
+        <header class="container-fluid bg-light p-3">
+            <nav class="navbar navbar-expand-lg navbar-light  d-flex justify-content-between">
+                <a href="index.html" class="navbar-brand"><img src="img/logo.png" alt="Logo de la société Orinoco" /></a>
+                <div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div id="navbarContent" class="collapse navbar-collapse">
+                        <ul class="navbar-nav">
+                            <li class=" nav-item active"><a class="nav-link" href="#">S'inscrire</a></li>
+                            <li class=" nav-item"><a class="nav-link" href="#">Mon compte</a></li>
+                            <li class=" nav-item"><a class="nav-link" href="shopping-cart.html"><i class="fas fa-shopping-cart"></i>Panier</a></li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
         </header>
 
         <!-- Main -->
-        <main id="main">
+        <main id="main" class="bg-info p-3">
             <h1 class="text-center">Bienvenue sur OriTech</h1>
             <p class="text-center">Découvrez notre gamme de produits hight tech</p>
-            <section>
-                <h2>Appareils photo</h2>
-                <template id="articleTemplate">
-                    <article>
-                        <h3 id="articleTitle">Titre</h3>
-                        <p id="articleDescription">Description</p>
-                    </article>
-                </template>
+            <section class="container rounded bg-light">
+                <h2 class="ml-3">Appareils photos vintage</h2>
+                <div id="box" class="d-lg-flex justify-content-around p-3">
+                    <template id="articleTemplate">
+                        <article class="container p-0 rounded bg-white m-3">
+                            <img id="articleImage" class="w-100 h-50" src="" alt="Appareils photo vintage" />
+                            <h3 id="articleTitle">Titre</h3>
+                            <p id="articlePrice">Prix</p>
+                        </article>
+                    </template>
+                </div>
             </section>
         </main>
 
         <!-- Footer -->
-        <footer class="bg-light mt-5">
+        <footer class="bg-light">
             <div class="container">
                 <div class="row pt-4 pb-3">
                     <div class="col">
