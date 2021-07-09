@@ -3,7 +3,7 @@ main()
 async function main() {
     const products = await getProducts()
     for (product of products) {
-        displayProduct(product)   
+        displayAllProduct(product)   
     }
 }
 
@@ -20,11 +20,12 @@ function getProducts() {
         })
 }
 
-function displayProduct(product) {
+function displayAllProduct(product) {
     const templateElement = document.getElementById("articleTemplate")
     const cloneElement = document.importNode(templateElement.content, true)
 
-
+    let idProd = product._id;
+    cloneElement.getElementById("article").setAttribute("id", idProd)
     cloneElement.getElementById("articleTitle").textContent = product.name
     let productPrice = product.price / 1000;
     cloneElement.getElementById("articlePrice").textContent = (new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(productPrice))
@@ -32,4 +33,12 @@ function displayProduct(product) {
     cloneElement.getElementById("articleImage").setAttribute("src", urlImage)
 
     document.getElementById("box").appendChild(cloneElement)
+    
 }
+
+
+
+
+
+
+
