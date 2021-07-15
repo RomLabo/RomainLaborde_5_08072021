@@ -1,0 +1,60 @@
+
+// Requête à l'api avec l'id du produit sélectionné
+fetch(apiUrl + "/" + "5be1ed3f1c9d44000030b061")
+    .then((response) => 
+        response.json()
+    .then((data) => {
+            //console.log(data);
+            // Création d'un élément contenant les valeurs du produit sélectionné
+            let viewProduct = `<article id="${data._id}" class="item m-3 w-50 bg-white">`;
+            let allLenses = data.lenses;
+            // Pour chaque objectifs du produit il sera crée une option dans l'élément <select>
+            let lensesOption = `<select name="lenses" id="lenses-select" class="p-1">`;
+                                    for (let lense of allLenses) {
+                                        lensesOption += `<option vlaue="${lense}">${lense}</option>`
+                                    }
+            lensesOption += `</select>`;
+            // Créer une liste d'options pour choisir la quantité du produit  
+            const allQuantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            let quantityNumber = `<select name="Quantity" id="quantity" class="p-1">`;
+                                    for (let number of allQuantity) {
+                                        quantityNumber += `<option vlaue="${number}">${number}</option>`
+                                    }
+            quantityNumber += `</select>`;
+            // Ajout des valeurs du produit à chaque élément composant l'élément <article>
+            viewProduct += `<img src="${data.imageUrl}" alt"Un appareil photo vintage" class="w-100 rounded-top"/>
+                             <div class="d-flex justify-content-between p-2 rounded-bottom">
+                                <h3 class="fs-5">${data.name}</h3>
+                                <p>${(new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(data.price / 1000))}</p>
+                             </div>
+                             <p class="p-3">${data.description}</p>
+                            <div class="d-flex justify-content-around p-3">
+                                <div id="productQuantity"></div>     
+                                <div id="option"></div>   
+                                <button id="add">Ajouter au panier</button>
+                            </div>`    
+            viewProduct += `</article>`;
+            // Ajout de ces éléments dans leur conteneur
+            document.querySelector('#product').innerHTML = viewProduct;
+            document.querySelector('#option').innerHTML = lensesOption;
+            document.querySelector('#productQuantity').innerHTML = quantityNumber;
+        }) 
+    ).catch((err) => console.log('Error :' + err)
+);
+
+
+document.querySelector('#add').addEventListener('click', ( e => {
+    let targ = e.target;
+    console.log(targ); 
+}));
+
+
+
+
+
+
+
+
+
+
+
