@@ -1,6 +1,6 @@
-
+const productId = window.location.search.substr(1);
 // Requête à l'api avec l'id du produit sélectionné
-fetch(apiUrl + "/" + "5be1ed3f1c9d44000030b061")
+fetch(apiUrl + "/" + productId)
     .then((response) => 
         response.json()
     .then((data) => {
@@ -43,11 +43,13 @@ fetch(apiUrl + "/" + "5be1ed3f1c9d44000030b061")
 );
 
 
+
+/*
 document.querySelector('#add').addEventListener('click', ( e => {
     let targ = e.target;
     console.log(targ); 
 }));
-
+*/
 
 
 
