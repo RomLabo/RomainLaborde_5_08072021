@@ -17,6 +17,7 @@ let getProducts = data => data.forEach(product => viewProduct(product));
 // Créer un article cliquable contenant les informations du produit.
 function viewProduct (product) {
     let productHtml = document.createElement('div');
+        productHtml.setAttribute("class", "product-content");
         productHtml.innerHTML = 
             `<a href="./product.html?${product._id}" class="product-link" >
                 <article  class="product">
