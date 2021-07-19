@@ -37,7 +37,29 @@
                 <img class="section__img" src="./img/image.jpg" alt="Appareil photo vintage sur un plancher en bois" />
                 <h2 class="section__title">Appareils photos vintage</h2>
                 <div id="product" class="product-content">
-                    
+                    <article id="articleId" class="product">
+                        <img id="articleImage" src="" alt="Un appareil photo vintage" class="product__img"/>
+                        <div class="product__more-info">
+                            <div class="product-more">
+                                <h3 id="articleTitle">${data.name}</h3>
+                                <p id="articlePrice">${(new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(data.price / 1000))}</p>
+                            </div>
+                            <p id="articleDescription"></p>
+                            <div class="product-more">
+                                <div id="productQuantity">
+                                    <select name="Quantity" id="quantity">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>     
+                                <div id="option"></div>   
+                            </div>
+                            <button name="add" type="submit" id="add">Ajouter au panier</button>
+                        </div>  
+                    </article>
                 </div>
             </section>
         </main>
@@ -50,6 +72,7 @@
                 <li class="footer-list__item"><a href="#">Mentions légales</a></li>
             </ul>
         </footer>
+        <script src="./scrollingMenu.js"></script>
         <script src="./product.js"></script>
     </body>
 </html>
