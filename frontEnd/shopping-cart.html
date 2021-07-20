@@ -7,44 +7,55 @@
         <title>OriTech - Entreprise de commerce en ligne - Vente des meilleurs appareils hight tech</title>
         <link rel="icon" href="img/favicon.ico" />
         <link rel="stylesheet" type="text/css" href="./public/css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     </head>
     <body>
         <!-- Header -->
         <header class="header">
-            <a href="index.html" class=""><img src="img/logo.png" alt="Logo de la société Orinoco" /></a>
-            <nav class="">
-                <button class="" type="button" data-toggle="" data-target="">
-                    <span class=""></span>
+            <nav class="nav">
+                <a href="index.html" class="nav__img"><img src="img/logo.png" alt="Logo de la société Orinoco" /></a>
+                <button id="nav-btn" class="nav__btn" type="button" data-toggle="" data-target="">
+                    <i class="fas fa-bars"></i>
                 </button>
-                <ul class="">
-                    <li class=""><a class="" href="#">S'inscrire</a></li>
-                    <li class=""><a class="" href="#">Mon compte</a></li>
-                    <li class=""><a class="" href="shopping-cart.html"><i class="fas fa-shopping-cart"></i>Panier</a></li>
+                <ul id="nav-item" class="nav__list">
+                    <li class="nav-list__item"><a class="item__link" href="#">S'inscrire</a></li>
+                    <li class="nav-list__item"><a class="item__link" href="#">Mon compte</a></li>
+                    <li class="nav-list__item"><a class="item__link" href="shopping-cart.html"><i class="fas fa-shopping-cart"></i>Panier</a></li>
                 </ul>
             </nav>
         </header>
 
         <!-- Main -->
-        <main id="main" class="">
-            <h1 class="">Bienvenue sur Oritech</h1>
-            <p class="">Découvrez les meilleurs produits hight tech du moment</p>
-            <section class="">
-                <h2 class="">Appareils photos vintage</h2>
-                <div id="products">
-                    
-                </div>
+        <main id="main" class="main">
+            <h1 class="main__title">Bienvenue sur Oritech</h1>
+            <p class="main__text">Découvrez les meilleurs produits hight tech du moment</p>
+            <section class="section">
+                <img class="section__img" src="./img/image.jpg" alt="Appareil photo vintage sur un plancher en bois" />
+                <h2 class="section__title">Appareils photos vintage</h2>
+                <table>
+                    <tr>
+                        <td><img id="imgStor" src="" alt="Appareil photo" /></td>
+                        <td><h3 id="nameStor"></h3></td>
+                        <td id="quantityStor"></td>
+                        <td id="priceStor"></td>
+                    </tr>
+                </table>
             </section>
         </main>
 
         <!-- Footer -->
-        <footer class="">
-            <ul class="">
-                <li class=""><a href="#">Devenir partenaire</a></li>
-                <li class=""><a href="#">Contact</a></li>
-                <li class=""><a href="#">Mentions légales</a></li>
+        <footer class="footer">
+            <ul class="footer-list">
+                <li class="footer-list__item"><a href="#">Devenir partenaire</a></li>
+                <li class="footer-list__item"><a href="#">Contact</a></li>
+                <li class="footer-list__item"><a href="#">Mentions légales</a></li>
             </ul>
         </footer>
+        <script src="./scrollingMenu.js"></script>
         <script src="./shopping-cart.js"></script>
     </body>
 </html>

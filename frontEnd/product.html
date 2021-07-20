@@ -35,14 +35,14 @@
             <p class="main__text">Découvrez les meilleurs produits hight tech du moment</p>
             <section class="section">
                 <img class="section__img" src="./img/image.jpg" alt="Appareil photo vintage sur un plancher en bois" />
-                <h2 class="section__title">Appareils photos vintage</h2>
+                <h2 id="sectionTitle" class="section__title">Appareils photos vintage</h2>
                 <div id="product" class="product-content">
                     <article id="articleId" class="product">
                         <img id="articleImage" src="" alt="Un appareil photo vintage" class="product__img"/>
                         <div class="product__more-info">
                             <div class="product-more">
                                 <h3 id="articleTitle">${data.name}</h3>
-                                <p id="articlePrice">${(new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(data.price / 1000))}</p>
+                                <p id="articlePrice"></p>
                             </div>
                             <p id="articleDescription"></p>
                             <div class="product-more">
