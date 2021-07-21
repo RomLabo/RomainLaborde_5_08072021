@@ -25,7 +25,8 @@ function getProduct (data) {
     viewItem(data);
     // Ajout des options du produit
     getLensesOption(data);
-    // Ajout d'un sélecteur de quantité    
+    // Ajout d'un sélecteur de quantité 
+    populateStorage(data);   
 }
 
 
@@ -59,25 +60,21 @@ let urlAlert = () => {
 
 
 
-document.querySelector('#add').addEventListener('click', populateStorage());
+document.querySelector('#add').addEventListener('click', populateStorage);
 
-function populateStorage() {
-    let productPrice = document.getElementById('articlePrice');
+function populateStorage(data) {
+    let productPrice = data.price;
     let quantityOfProduct = document.getElementById('quantity');
     let quantityChoice = quantityOfProduct.addEventListener('change', (event) => {
         let quantityChoiceValue = event.target.value;
         localStorage.setItem('quantity', quantityChoiceValue);
+        localStorage.setItem('name', productName);
+        localStorage.setItem('image', productImage);
+        localStorage.setItem('price', productPrice);
     });
-    /*let productImage = document.getElementById('articleImage').getAttribute('src');
-    console.log(productImage);*/
-    let productName = document.getElementById('articleTitle');
-    let name = productName.textContent;
-    console.log(name);
-    /*
-    localStorage.setItem('option', document.getElementById('lenses-select').value);*/
-    localStorage.setItem('price', productPrice);
-    localStorage.setItem('name', productName);
-    /*localStorage.setItem('sum',().value);*/
+    let productImage = data.imageUrl;
+    let productName = data.name;
+    /*localStorage.setItem('option', document.getElementById('lenses-select').value);*/
 }
 
 
