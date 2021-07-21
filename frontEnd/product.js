@@ -30,8 +30,8 @@ function getProduct (data) {
 }
 
 
+// Ajout des valeurs du produit à chaque élément composant l'élément 'article'.
 function viewItem (data) {
-    // Ajout des valeurs du produit à chaque élément composant l'élément <article>
     document.getElementById("articleId").setAttribute("id", data._id);
     document.getElementById("articleTitle").textContent = data.name;
     document.getElementById("articlePrice").textContent = (new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(data.price / 1000));
@@ -40,8 +40,8 @@ function viewItem (data) {
 }
 
 
+// Pour chaque objectifs du produit il sera crée une option dans l'élément 'select'
 function getLensesOption (data) {
-    // Pour chaque objectifs du produit il sera crée une option dans l'élément <select>
     let allLenses = data.lenses;
     let lensesOption = `<select name="lenses" id="lenses-select">`;
         for (let lense of allLenses) {
@@ -52,30 +52,58 @@ function getLensesOption (data) {
 }
 
 
-// Change le texte du titre principal de la page par un message d'alerte.
+// Change le texte du titre principal de la page par un message d'alerte si une érreur est détecté dans l'url.
 let urlAlert = () => {
     document.getElementById('sectionTitle').textContent = "Un problème est servenu veuillez revenir sur la page principal, Merci.";
     document.getElementById('product').style.display = 'none';
 } 
 
 
-
+// Ecoute le click du bouton 'ajouter au panier' et utilise la fonction 'populateStorage'.
 document.querySelector('#add').addEventListener('click', populateStorage);
 
+// Récupère les donées du produit et les envoie dans le local storage.
 function populateStorage(data) {
-    let productPrice = data.price;
     let quantityOfProduct = document.getElementById('quantity');
-    let quantityChoice = quantityOfProduct.addEventListener('change', (event) => {
+    quantityOfProduct.addEventListener('change', (event) =>  {
         let quantityChoiceValue = event.target.value;
-        localStorage.setItem('quantity', quantityChoiceValue);
-        localStorage.setItem('name', productName);
-        localStorage.setItem('image', productImage);
-        localStorage.setItem('price', productPrice);
-    });
-    let productImage = data.imageUrl;
-    let productName = data.name;
-    /*localStorage.setItem('option', document.getElementById('lenses-select').value);*/
+        let cartProduct = {
+            image: data.imageUrl,
+            price: data.price * quantityChoiceValue,
+            nameProduct: data.name,
+            quantity: quantityChoiceValue,
+        }
+        let productStorage = JSON.parse(localStorage.getItem("viewCartProduct"))
+        if (productStorage) {
+            // Ajoute les données du produit dans le localStorage
+            productStorage.push(cartProduct);
+            localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
+            console.log(productStorage);
+        } else {
+            // Créer un tableau pour stocker les données du produit si le panier est vide
+            productStorage = [];
+            productStorage.push(cartProduct);
+            localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
+            console.log(productStorage);
+        }
+    }); // Ajouter les options au storage
+    confirmationWindow();   
+    
 }
+
+
+// Créer une fenêtre pour consulter son panier ou continuer ses achats
+const confirmationWindow = (data) => {
+    if (window.confirm(`${data.name} option : ${lense} a bien été ajouté au panier
+    Consulter le panier OK ou continuer vos achats ANNULER`)){
+        window.location.href = "shopping-cart.html";
+    } else {
+        window.location.href = "index.html";
+    }
+}
+
+
+
 
 
 /*function change_valeur() {
