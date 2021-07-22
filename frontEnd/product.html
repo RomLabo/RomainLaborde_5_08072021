@@ -22,8 +22,8 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <ul id="nav-item" class="nav__list">
-                    <li class="nav-list__item"><a class="item__link" href="#">S'inscrire</a></li>
-                    <li class="nav-list__item"><a class="item__link" href="#">Mon compte</a></li>
+                    <li class="nav-list__sign"><a class="item__link" href="#"><i class="fas fa-user-plus"></i>S'inscrire</a></li>
+                    <li class="nav-list__item"><a class="item__link" href="#"><i class="fas fa-user"></i>Mon compte</a></li>
                     <li class="nav-list__item"><a class="item__link" href="shopping-cart.html"><i class="fas fa-shopping-cart"></i>Panier</a></li>
                 </ul>
             </nav>
@@ -32,7 +32,7 @@
         <!-- Main -->
         <main id="main" class="main">
             <h1 class="main__title">Bienvenue sur Oritech</h1>
-            <p class="main__text">Découvrez les meilleurs produits hight tech du moment</p>
+            <p class="main__text">Découvrez les meilleurs produits high tech du moment</p>
             <section class="section">
                 <img class="section__img" src="./img/image.jpg" alt="Appareil photo vintage sur un plancher en bois" />
                 <h2 id="sectionTitle" class="section__title">Appareils photos vintage</h2>
@@ -65,9 +65,27 @@
                                     
                                 </select>  
                             </div>
-                            <button name="add" type="submit" id="add">Ajouter au panier</button>
+                            <button name="add" type="submit" id="add" class="footer-list__item">Ajouter au panier</button>
                         </div>  
                     </article>
+                    <div id="window-confirmation" class="window">
+                        <div class="window__text">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Votre article a bien été ajouté au panier.</p>
+                        </div>
+                        <button id="confirmation-btn" type="button" name="bouton de confirmation">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div id="window-error-quantity" class="window">
+                        <div class="window__text">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Veuillez choisir la quantité.</p>
+                        </div>
+                        <button id="error-btn" type="button" name="bouton de confirmation">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                 </div>
             </section>
         </main>

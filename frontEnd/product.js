@@ -26,7 +26,7 @@ const getProduct = (data) => {
     // Ajout des options du produit
     getLensesOption(data);
     // Ajout d'un sélecteur de quantité 
-    populateStorage(data);   
+    populateStorage(data); 
 }
 
 
@@ -58,15 +58,48 @@ const urlAlert = () => {
 } 
 
 
-// Créer une fenêtre pour consulter son panier ou continuer ses achats
+const getConfirmationWindow = document.getElementById('window-confirmation');
+const windowProduct = document.querySelector('article.product');
+
+
+// Affiche une fenêtre pour confirmer l'ajout du produit au panier.
 const confirmationWindow = () => {
-    if (window.confirm(`Votre produit a bien été ajouté au panier
-    Consulter le panier OK ou continuer vos achats ANNULER`)){
-        window.location.href = "./shopping-cart.html";
-    } else {
-        window.location.href = "./index.html";
-    }
+    getConfirmationWindow.style.display = 'flex';
+    windowProduct.style.opacity = '0.2';
 }
+
+
+// Ferme la fenêtre de confirmation.
+const closeConfirmationWindow = () => {
+    getConfirmationWindow.style.display = 'none';
+    windowProduct.style.opacity = '1';
+}
+
+// Ecoute le click du bouton de fermeture de la fenêtre de confirmation.
+const confirmationWindowBtn = document.getElementById('confirmation-btn');
+confirmationWindowBtn.addEventListener('click', closeConfirmationWindow);
+
+
+
+const errorQuantityWindow = document.getElementById('window-error-quantity');
+
+
+// Affiche une fenêtre pour informer de l'absence de quantité séléctionnée pour le produit.
+const getErrorQuantityWindow = () => {
+    errorQuantityWindow.style.display = 'flex';
+    windowProduct.style.opacity = '0.2';
+}
+
+
+// Ferme la fenêtre d'erreur.
+const closeErrorQuantityWindow = () => {
+    errorQuantityWindow.style.display = 'none';
+    windowProduct.style.opacity = '1';
+}
+
+// Ecoute le click du bouton de fermeture de la fenêtre d'erreur.
+const errorQuantityWindowBtn = document.getElementById('error-btn');
+errorQuantityWindowBtn.addEventListener('click', closeErrorQuantityWindow);
 
 
 // Récupère l'option choisie.
@@ -82,7 +115,6 @@ const getOptionChoiceValue = () => {
 let cartProduct = '';
 const getCartProductObject = (data) => {
     cartProduct = {
-        image: data.imageUrl,
         price: data.price * quantityChoiceValue,
         nameProduct: data.name,
         quantity: quantityChoiceValue,
@@ -92,48 +124,44 @@ const getCartProductObject = (data) => {
 
 // Récupère la quantity choisie et envoie les données dans le localeStorage.
 let quantityChoiceValue = '';
-const getQuantityChoiceValue = (data) => {
+const getQuantityChoiceValue = () => {
     let quantityOfProduct = document.getElementById('quantity');
     quantityOfProduct.addEventListener('change', (event) =>  {
-        quantityChoiceValue = event.target.value;
-        getCartProductObject(data);
-        let productStorage = JSON.parse(localStorage.getItem("viewCartProduct"))
-        if (productStorage) {
-            // Ajoute les données du produit dans le localStorage
-            productStorage.push(cartProduct);
-            localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
-            console.log(productStorage);
+        quantityChoiceValue = event.target.value; 
+    })
+}
+
+const getProductOnStorage = (data) => {
+    // Ecoute le click du bouton 'ajouter au panier' et envoie les données.
+    let bidule = document.getElementById('add');
+    bidule.addEventListener('click', () =>  { 
+        if (quantityChoiceValue >= 1 ) {
+            getCartProductObject(data);
+            let productStorage = JSON.parse(localStorage.getItem("viewCartProduct"))
+            if (productStorage) {
+                // Ajoute les données du produit dans le localStorage
+                productStorage.push(cartProduct);
+                localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
+                console.log(productStorage);
+            } else {
+                // Créer un tableau pour stocker les données du produit si le panier est vide
+                productStorage = [];
+                productStorage.push(cartProduct);
+                localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
+                console.log(productStorage);
+            }
+            confirmationWindow(); 
         } else {
-            // Créer un tableau pour stocker les données du produit si le panier est vide
-            productStorage = [];
-            productStorage.push(cartProduct);
-            localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
-            console.log(productStorage);
-        } 
+            getErrorQuantityWindow();
+        }
     })
 }
 
 // Execute ces deux fonctions avant l'envoie dans le local storage.
 const populateStorage = (data) => {
     getOptionChoiceValue();
-    getQuantityChoiceValue(data);
+    getQuantityChoiceValue();
+    getProductOnStorage(data);
 }
 
-// Ecoute le click du bouton 'ajouter au panier' et utilise la fonction 'populateStorage'.
-document.querySelector('#add').addEventListener('click', (populateStorage, confirmationWindow));
 
-
-
-
-
-
-
-
-
-
-/*function change_valeur() {
-select = document.getElementById("select");
-choice = select.selectedIndex  // Récupération de l'index du <option> choisi
- 
-valeur_cherchee = select.options[choice].value; // Récupération du texte du <option> d'index "choice"
-}*/
