@@ -197,7 +197,7 @@ body {
         border-bottom-left-radius: 0.6rem;
         border-bottom-right-radius: 0.6rem;
         width: 16.5rem;
-        height: 4rem;
+        height: 2.5rem;
         font-weight: bold;
         display: flex;
         justify-content: space-between;
@@ -284,7 +284,7 @@ button {
     align-items: center;
     border: 0.275rem solid #fff;  
     &__img {
-        width: 25%;
+        width: 20%;
         height: 5.5rem;
         border: 0.275rem solid #fff;
         object-fit: cover;
@@ -299,7 +299,7 @@ button {
     }
     &__title {
         background-color: #fff;
-        width: 40%;
+        width: 25%;
         height: 6.05rem;
         font-weight: bold;
         display: flex;
@@ -309,7 +309,7 @@ button {
     } 
     &__quantity {
         background-color: #fff;
-        width: 7%;
+        width: 10%;
         height: 6.05rem;
         font-weight: bold;
         display: flex;
@@ -320,7 +320,7 @@ button {
         border-top-right-radius: 0.6rem;
         border-bottom-right-radius: 0.6rem;
         background-color: #fff;
-        width: 27%;
+        width: 20%;
         height: 6.05rem;
         font-weight: bold;
         display: flex;
