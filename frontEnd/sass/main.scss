@@ -392,3 +392,24 @@ button {
     align-items: center;
     gap: 1rem;
 }
+
+
+.form {
+    width: 50%;
+}
+.form-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3rem;
+    &__label {
+        font-size: 1.2rem;
+    }
+    &__input {
+        border-radius: 0.6rem;
+        width: 70%;
+        height: 2rem;
+        padding: 0 0 0 1rem;
+    }
+}
+

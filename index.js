@@ -19,7 +19,7 @@ function viewProduct (product) {
     let productHtml = document.createElement('div');
         productHtml.setAttribute("class", "product-content");
         productHtml.innerHTML = 
-            `<a href="./product.html?ref=${product._id}" class="product-link" >
+            `<a href="./frontEnd/product.html?ref=${product._id}" class="product-link" >
                 <article  class="product">
                     <img src="${product.imageUrl}" alt"Un appareil photo vintage" class="product__img"/>
                     <div class="product__info">
