@@ -58,16 +58,36 @@ let removeAllProducts = document.getElementById('remove-products');
 removeAllProducts.addEventListener('click', removeAll);
 
 
-
-
-
 // Affiche le prix total.
 getSumPriceProductStorage();
 
 
 
+// formulaire
+/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/ //regex email
+  
+
+let purchaseBtn = document.getElementById("purchase-btn");
+let userPostCode = document.getElementById("user_postcode");
+
+    
+userPostCode.addEventListener("input", function(e) {
+    if (/^((0[1-9])|([1-8][0-9])|(9[0-8]))[0-9]{3}$/.test(e.target.value)) {
+        purchaseBtn.removeAttribute('disabled', true);
+    } else {
+        purchaseBtn.setAttribute('disabled', true);
+    }
+});
 
 
+// Ecoute d'un input vide pour détecter une attaque.
+let inputDetect = document.getElementById('input-detect');
+inputDetect.addEventListener("input", function(a) {
+    if ((a.target.value) != "") {
+        alert("Tentative d'intrusion détectée");
+        // Appel d'une fonction qui rejetera la requête.
+    }
+}); 
 
 
 

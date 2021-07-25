@@ -264,6 +264,9 @@ button {
     box-shadow: inset 2px 2px #2e2e2e, inset -2px -2px #2e2e2e ;
     background-color: #D2834C;
     border-radius: 0.4rem;
+    &:disabled {
+        opacity: 0.1;
+    }
 }
 
 

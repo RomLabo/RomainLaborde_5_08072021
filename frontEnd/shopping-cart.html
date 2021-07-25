@@ -56,32 +56,33 @@
             <section class="section">
                 <div id="sumPriceProducts"></div>
                 <form class="form" action="/ma-page-de-traitement" method="post">
+                    <input id="input-detect" type="hidden" name="user_vide" name="user_vide" value="">
                     <div class="form-content">
-                        <label for="user_name" class="form-content__label">Nom</label>
+                        <label for="user_name" class="form-content__label">Nom :</label>
                         <input type="text" name="user_name" id="user_name" class="form-content__input" placeholder="Haddock" required />
                     </div>
                     <div class="form-content">
-                        <label for="user_first-name" class="form-content__label">Prénom</label>
+                        <label for="user_first-name" class="form-content__label">Prénom :</label>
                         <input type="text" name="user_first-name" id="user_first-name" class="form-content__input" placeholder="Archibald" required />
                     </div>
                     <div class="form-content">
-                        <label for="user_mail" class="form-content__label">Adresse e-mail</label>
-                        <input type="text" name="user_mail" id="user_mail" class="form-content__input" placeholder="millesabord@mail.fr" required />
+                        <label for="user_mail" class="form-content__label">E-mail :</label>
+                        <input type="email" name="user_mail" id="user_mail" class="form-content__input" placeholder="millesabord@mail.fr" required />
                     </div>
                     <div class="form-content">
-                        <label for="user_adress" class="form-content__label">Adresse</label>
+                        <label for="user_adress" class="form-content__label">Adresse :</label>
                         <input type="text" name="user_adress" id="user_adress" class="form-content__input" placeholder="1 rue de Moulinsart" required />
                     </div>
                     <div class="form-content">
-                        <label for="user_postcode" class="form-content__label">Code postal</label>
-                        <input type="text" name="user_postcode" id="user_postcode" class="form-content__input" placeholder="75000" required />
+                        <label for="user_postcode" class="form-content__label">Code postal :</label>
+                        <input type="text" name="user_postcode" id="user_postcode" class="form-content__input" placeholder="75000"  required />
                     </div>
                     <div class="form-content">
-                        <label for="user_town" class="form-content__label">Ville</label>
+                        <label for="user_town" class="form-content__label">Ville :</label>
                         <input type="text" name="user_town" id="user_town" class="form-content__input" placeholder="Paris" required />
                     </div>
                 </form>
-                <button class="footer-list__item">Commander</button>
+                <button type="button" id="purchase-btn" class="footer-list__item">Commander</button>
             </section>
         </main>
 
