@@ -64,24 +64,75 @@ getSumPriceProductStorage();
 
 
 // formulaire
-/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/ //regex email
-  
+ //regex firstname : 
+const postCodeRegex = /^((0[1-9])|([1-8][0-9])|(9[0-8]))[0-9]{3}$/;
+const emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+const firstNameRegex = /^[A-Z][A-Za-z\é\è\ê\ï\-]+$/;
+const nameRegex = /^[A-Z][a-z]/;
 
-let purchaseBtn = document.getElementById("purchase-btn");
-let userPostCode = document.getElementById("user_postcode");
+const purchaseBtn = document.getElementById("purchase-btn");
+const userPostCode = document.getElementById("user_postcode");
+const userMail = document.getElementById('user_mail');
+const userFirstName = document.getElementById('user_first-name');
+const userName = document.getElementById('user_name');
 
-    
-userPostCode.addEventListener("input", function(e) {
-    if (/^((0[1-9])|([1-8][0-9])|(9[0-8]))[0-9]{3}$/.test(e.target.value)) {
-        purchaseBtn.removeAttribute('disabled', true);
-    } else {
-        purchaseBtn.setAttribute('disabled', true);
-    }
-});
+
+
+
+const firstNameValid = () => {
+    userFirstName.addEventListener("input", function(e) {
+        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
+        if (firstNameRegex.test(e.target.value)) {
+            userFirstName.style.backgroundColor = 'green';
+        } else {
+            userFirstName.style.backgroundColor = 'red';
+        }
+    })
+}
+firstNameValid();
+
+
+const nameValid = () => {
+    userName.addEventListener('input', function(e) {
+        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
+        if (nameRegex.test(e.target.value)) {
+            userName.style.backgroundColor = 'green';
+        } else {
+            userName.style.backgroundColor = 'red';
+        }
+    })
+} 
+nameValid();
+
+const mailValid = () => {
+    userMail.addEventListener("input", function(e) {
+        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
+        if (emailRegex.test(e.target.value)) {
+            userMail.style.backgroundColor = 'green';
+        } else {
+            userMail.style.backgroundColor = 'red';
+        }
+    })
+}
+mailValid();
+
+const postCodeValid = () => {
+    userPostCode.addEventListener("input", function(e) {
+        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
+        if (postCodeRegex.test(e.target.value)) {
+            userPostCode.style.backgroundColor = 'green';
+        } else {
+            userPostCode.style.backgroundColor = 'red';
+        }
+    })
+     
+}
+postCodeValid();
+
 
 
 // Ecoute d'un input vide pour détecter une attaque.
-let inputDetect = document.getElementById('input-detect');
+const inputDetect = document.getElementById('input-detect');
 inputDetect.addEventListener("input", function(a) {
     if ((a.target.value) != "") {
         alert("Tentative d'intrusion détectée");
@@ -89,9 +140,30 @@ inputDetect.addEventListener("input", function(a) {
     }
 }); 
 
+// 
+const formU = document.getElementById('form');
+formU.addEventListener('change', function(z) {
+    if ((userName.value != "") && (userFirstName.value != "") && (userMail.value != "") && (userPostCode.value != "")) {
+        purchaseBtn.removeAttribute('disabled');
+    }
+} )
+
+const formValid = () => {
+    if (!((nameRegex.test(userName)) && (firstNameRegex.test(userFirstName)) && (emailRegex.test(userMail)) && (postCodeRegex.test(userPostCode)))) {
+        alert('ok'); 
+        // Autoriser la requête.
+    } else {
+        alert('Erreur');
+        // Refuser la requête et afficher un message comme pour indiquer le panier vide.
+    }
+}
 
 
+purchaseBtn.addEventListener('click', formValid)
 
+// Styliser avec des animations les erreurs sur les inputs.
+// Ajout de regex et des controles sur les 2 autres inputs .
+// Création d'une fonction pour englober la methode post, qu'il faudra intégrer dans formValid.
 
 
 
