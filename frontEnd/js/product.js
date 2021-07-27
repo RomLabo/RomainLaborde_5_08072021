@@ -115,12 +115,14 @@ const getOptionChoiceValue = () => {
 let cartProduct = '';
 const getCartProductObject = (data) => {
     cartProduct = {
+        ref: data._id,
         price: data.price * quantityChoiceValue,
         nameProduct: data.name,
         quantity: quantityChoiceValue,
         option: optionChoiceValue,
     }
 }
+
 
 // Récupère la quantity choisie et envoie les données dans le localeStorage.
 let quantityChoiceValue = '';

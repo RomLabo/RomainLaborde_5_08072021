@@ -31,6 +31,7 @@ const addProductStorage = (product) => {
     const templateElement = document.getElementById("productTemplate")
     const productHtml = document.importNode(templateElement.content, true)
     // Ajoute les valeurs du produit à chaque colonne de la ligne.
+    productHtml.getElementById("refStor").setAttribute('id', product.ref);
     productHtml.getElementById("nameStor").textContent = product.nameProduct;
     productHtml.getElementById("quantityStor").textContent = product.quantity;
     productHtml.getElementById("optionStor").textContent = product.option;
@@ -75,6 +76,7 @@ const userPostCode = document.getElementById("user_postcode");
 const userMail = document.getElementById('user_mail');
 const userFirstName = document.getElementById('user_first-name');
 const userName = document.getElementById('user_name');
+
 
 
 
@@ -142,15 +144,48 @@ inputDetect.addEventListener("input", function(a) {
 
 // 
 const formU = document.getElementById('form');
+let contact = '';
 formU.addEventListener('change', function(z) {
     if ((userName.value != "") && (userFirstName.value != "") && (userMail.value != "") && (userPostCode.value != "")) {
         purchaseBtn.removeAttribute('disabled');
+        contact = {
+            customerName: userName.value,
+            customerFisrtName: userFirstName.value,
+            customerMail: userMail.value,
+            customerPostCode: userPostCode.value,
+        };
+        console.log(contact);
     }
-} )
+})
+
+
+let products = [];
+viewProductStorageJSON.forEach(function(item) {
+    products.push(item.ref);
+});
+
+
+console.log(products);
+
+
 
 const formValid = () => {
     if (!((nameRegex.test(userName)) && (firstNameRegex.test(userFirstName)) && (emailRegex.test(userMail)) && (postCodeRegex.test(userPostCode)))) {
-        alert('ok'); 
+        fetch("http://localhost:3000/api/cameras/order", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ contact, products }),
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    localStorage.setItem("contact", JSON.stringify(contact));
+                    localStorage.setItem("products", JSON.stringify(products));
+                    //localStorage.setItem("orderId", JSON.stringify(data.orderId));
+                    document.location.href = "order-confirmation.html";
+                })
+                .catch((erreur) => console.log("erreur : " + erreur));
         // Autoriser la requête.
     } else {
         alert('Erreur');
