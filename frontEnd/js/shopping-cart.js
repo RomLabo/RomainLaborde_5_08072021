@@ -49,12 +49,15 @@ let getSumPriceOfProduct = () => viewProductStorageJSON.forEach(product => {
 });
 getSumPriceOfProduct();
 
+
+// Fonction pour vider le panier et le local storage.
 const removeAll = () => {
     localStorage.clear();
     document.location.reload();
 }
 
 
+// Ecoute le click du bouton 'vider le panier' .
 let removeAllProducts = document.getElementById('remove-products');
 removeAllProducts.addEventListener('click', removeAll);
 
@@ -63,24 +66,24 @@ removeAllProducts.addEventListener('click', removeAll);
 getSumPriceProductStorage();
 
 
-
-// formulaire
- //regex firstname : 
-const postCodeRegex = /^((0[1-9])|([1-8][0-9])|(9[0-8]))[0-9]{3}$/;
-const emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-const firstNameRegex = /^[A-Z][A-Za-z\é\è\ê\ï\-]+$/;
-const nameRegex = /^[A-Z][a-z]/;
-
+// variables stockant les données du formulaire de contact.
 const purchaseBtn = document.getElementById("purchase-btn");
 const userPostCode = document.getElementById("user_postcode");
 const userMail = document.getElementById('user_mail');
 const userFirstName = document.getElementById('user_first-name');
 const userName = document.getElementById('user_name');
+const userCity = document.getElementById('user_city');
+const userAddress = document.getElementById('user_address');
 
 
+// Variables pour stocker les regexs de chaque champ du formulaire.
+const postCodeRegex = /^((0[1-9])|([1-8][0-9])|(9[0-8]))[0-9]{3}$/;
+const emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+const firstNameRegex = /^[A-Z][A-Za-z\é\è\ê\ï\-]+$/;
+const nameRegex = /^[A-Z][a-z]/;
 
 
-
+// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
 const firstNameValid = () => {
     userFirstName.addEventListener("input", function(e) {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
@@ -94,6 +97,7 @@ const firstNameValid = () => {
 firstNameValid();
 
 
+// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
 const nameValid = () => {
     userName.addEventListener('input', function(e) {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
@@ -106,6 +110,8 @@ const nameValid = () => {
 } 
 nameValid();
 
+
+// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
 const mailValid = () => {
     userMail.addEventListener("input", function(e) {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
@@ -118,6 +124,8 @@ const mailValid = () => {
 }
 mailValid();
 
+
+// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
 const postCodeValid = () => {
     userPostCode.addEventListener("input", function(e) {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
@@ -132,7 +140,6 @@ const postCodeValid = () => {
 postCodeValid();
 
 
-
 // Ecoute d'un input vide pour détecter une attaque.
 const inputDetect = document.getElementById('input-detect');
 inputDetect.addEventListener("input", function(a) {
@@ -142,33 +149,35 @@ inputDetect.addEventListener("input", function(a) {
     }
 }); 
 
-// 
-const formU = document.getElementById('form');
+
+// Ecoute le changement de valeur de chaque champs du formulaire et active le bouton commander et créer un objet contact. 
+const contactForm = document.getElementById('form');
 let contact = '';
-formU.addEventListener('change', function(z) {
+contactForm.addEventListener('change', function(z) {
     if ((userName.value != "") && (userFirstName.value != "") && (userMail.value != "") && (userPostCode.value != "")) {
         purchaseBtn.removeAttribute('disabled');
         contact = {
-            customerName: userName.value,
-            customerFisrtName: userFirstName.value,
-            customerMail: userMail.value,
-            customerPostCode: userPostCode.value,
+            firstName: userName.value,
+            lastName: userFirstName.value,
+            address: userPostCode.value,
+            city: userAddress.value + userCity.value, 
+            email: userMail.value,
+            
         };
-        console.log(contact);
+        //console.log(contact);
     }
 })
 
 
+// Création d'un tableau contenant les références des tout les produits du panier.
 let products = [];
 viewProductStorageJSON.forEach(function(item) {
     products.push(item.ref);
 });
+//console.log(products);
 
 
-console.log(products);
-
-
-
+// Autorise la requête à l'api si les champs du formulaire comporte des valeurs conforme au attentes.
 const formValid = () => {
     if (!((nameRegex.test(userName)) && (firstNameRegex.test(userFirstName)) && (emailRegex.test(userMail)) && (postCodeRegex.test(userPostCode)))) {
         fetch("http://localhost:3000/api/cameras/order", {
@@ -182,7 +191,7 @@ const formValid = () => {
                 .then((data) => {
                     localStorage.setItem("contact", JSON.stringify(contact));
                     localStorage.setItem("products", JSON.stringify(products));
-                    //localStorage.setItem("orderId", JSON.stringify(data.orderId));
+                    localStorage.setItem("orderId", JSON.stringify(data.orderId));
                     document.location.href = "order-confirmation.html";
                 })
                 .catch((erreur) => console.log("erreur : " + erreur));
@@ -194,11 +203,16 @@ const formValid = () => {
 }
 
 
-purchaseBtn.addEventListener('click', formValid)
+// Ecoute le click du bouton commander et envoie la requête si la condition est respectée.
+purchaseBtn.addEventListener('click', formValid);
+
+
+
+
 
 // Styliser avec des animations les erreurs sur les inputs.
-// Ajout de regex et des controles sur les 2 autres inputs .
-// Création d'une fonction pour englober la methode post, qu'il faudra intégrer dans formValid.
+
+
 
 
 
