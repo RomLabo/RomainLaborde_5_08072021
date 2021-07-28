@@ -159,8 +159,8 @@ contactForm.addEventListener('change', function(z) {
         contact = {
             firstName: userName.value,
             lastName: userFirstName.value,
-            address: userPostCode.value,
-            city: userAddress.value + userCity.value, 
+            address: userAddress.value,
+            city: userPostCode.value + " " + userCity.value, 
             email: userMail.value,
             
         };
