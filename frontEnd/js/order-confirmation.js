@@ -10,13 +10,16 @@ console.log(orderStor);
 
 // affiche Mes informations
 const confirmationName = document.getElementById('confirm-name');
-const confirmationOrderIdAndAddress = document.getElementById('confirm-orderId-address');
+const confirmationOrderId = document.getElementById('confirm-orderId');
+const confirmationAddress = document.getElementById('confirm-address');
+const confirmationCity = document.getElementById('confirm-city');
 const confirmationEmail = document.getElementById('confirm-email');
 
-confirmationName.textContent = "Merci " + contactStor.firstName + " pour votre commande.";
-confirmationOrderIdAndAddress.textContent = "Nos équipes mettent tout en oeuvre pour vous livrer votre commande n° " + orderStor 
-                                            + " dans les plus brefs délais à l'adresse : " + contactStor.address + " " + contactStor.city + ".";
-confirmationEmail.textContent = "Un email de confirmation vient d'être envoyé à: " + contactStor.email + ".";
+confirmationName.textContent = contactStor.firstName;
+confirmationOrderId.textContent = orderStor; 
+confirmationAddress.textContent = contactStor.address;
+confirmationCity.textContent = contactStor.city;
+confirmationEmail.textContent = contactStor.email;
 
 const seeInvoice = document.getElementById('see-invoice');
 seeInvoice.addEventListener('click', printDiv);

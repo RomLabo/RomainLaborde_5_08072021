@@ -36,9 +36,28 @@ const addProductStorage = (product) => {
     productHtml.getElementById("quantityStor").textContent = product.quantity;
     productHtml.getElementById("optionStor").textContent = product.option;
     productHtml.getElementById("priceStor").textContent = (new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(product.price / 1000));
+    productHtml.getElementById("remove-item").setAttribute('id', (product.nameProduct + product.option));
     // Ajout les produits dans son conteneur.
     document.getElementById('tableStor').appendChild(productHtml);
 }
+
+
+// Ajoute un compteur de produit au bouton panier.
+let quantityValue = '';
+let sumQuantityCount = 0;
+let countQuantity = document.getElementById('count');
+let getSumQuantityOfProduct = () => viewProductStorageJSON.forEach(product => {
+    quantityValue = Number(product.quantity);
+    sumQuantityCount += quantityValue;
+    countQuantity.textContent = sumQuantityCount;
+    console.log(sumQuantityCount);
+    if ( sumQuantityCount < 100 && sumQuantityCount > 1) {
+        countQuantity.style.display = 'flex';
+    }
+});
+getSumQuantityOfProduct();
+
+
 
 
 // Pour chaque produit stocké dans le storage, est crée une ligne de tableau et son prix est ajouté au précédent.
@@ -81,6 +100,10 @@ const postCodeRegex = /^((0[1-9])|([1-8][0-9])|(9[0-8]))[0-9]{3}$/;
 const emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 const firstNameRegex = /^[A-Z][A-Za-z\é\è\ê\ï\-]+$/;
 const nameRegex = /^[A-Z][a-z]/;
+const addressRegex = /^(([a-zA-ZÀ-ÿ0-9]+[\s\-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,10}$/;
+const cityRegex = /^[A-Z][a-z]/;
+
+
 
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
@@ -139,6 +162,32 @@ const postCodeValid = () => {
 }
 postCodeValid();
 
+// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
+const addressValid = () => {
+    userAddress.addEventListener("input", function(e) {
+        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
+        if (addressRegex.test(e.target.value)) {
+            userAddress.style.backgroundColor = 'green';
+        } else {
+            userAddress.style.backgroundColor = 'red';
+        }
+    })
+}
+addressValid();
+
+// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
+const cityValid = () => {
+    userCity.addEventListener("input", function(e) {
+        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
+        if (cityRegex.test(e.target.value)) {
+            userCity.style.backgroundColor = 'green';
+        } else {
+            userCity.style.backgroundColor = 'red';
+        }
+    })
+}
+cityValid();
+
 
 // Ecoute d'un input vide pour détecter une attaque.
 const inputDetect = document.getElementById('input-detect');
@@ -154,7 +203,7 @@ inputDetect.addEventListener("input", function(a) {
 const contactForm = document.getElementById('form');
 let contact = '';
 contactForm.addEventListener('change', function(z) {
-    if ((userName.value != "") && (userFirstName.value != "") && (userMail.value != "") && (userPostCode.value != "")) {
+    if ((userName.value != "") && (userFirstName.value != "") && (userMail.value != "") && (userPostCode.value != "") && (userAddress.value != "") && (userCity.value != "")) {
         purchaseBtn.removeAttribute('disabled');
         contact = {
             firstName: userName.value,
@@ -162,11 +211,10 @@ contactForm.addEventListener('change', function(z) {
             address: userAddress.value,
             city: userPostCode.value + " " + userCity.value, 
             email: userMail.value,
-            
         };
         //console.log(contact);
     }
-})
+});
 
 
 // Création d'un tableau contenant les références des tout les produits du panier.
@@ -179,7 +227,7 @@ viewProductStorageJSON.forEach(function(item) {
 
 // Autorise la requête à l'api si les champs du formulaire comporte des valeurs conforme au attentes.
 const formValid = () => {
-    if (!((nameRegex.test(userName)) && (firstNameRegex.test(userFirstName)) && (emailRegex.test(userMail)) && (postCodeRegex.test(userPostCode)))) {
+    if (!((nameRegex.test(userName)) && (firstNameRegex.test(userFirstName)) && (emailRegex.test(userMail)) && (postCodeRegex.test(userPostCode)) && (addressRegex.test(userAddress)) && (cityRegex.test(userCity)))) {
         fetch("http://localhost:3000/api/cameras/order", {
                     method: "POST",
                     headers: {

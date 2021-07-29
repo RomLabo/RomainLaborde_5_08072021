@@ -133,10 +133,45 @@ const getQuantityChoiceValue = () => {
     })
 }
 
+// Ajoute un compteur de produit au bouton panier.
+let viewProductStorage = localStorage.getItem('viewCartProduct');
+let viewProductStorageJSON = JSON.parse(viewProductStorage);
+
+
+let quantityValue = '';
+let sumQuantityCount = 0;
+let countQuantity = document.getElementById('count');
+quantityValue = Number(product.quantity);
+countQuantity.textContent = quantityValue;
+
+if ( quantityValue < 100 && quantityValue > 1) {
+    countQuantity.style.display = 'flex';
+}
+
+// 
+let getSumQuantityOfProduct = () => {
+    let viewProductStorage = localStorage.getItem('viewCartProduct');
+    let viewProductStorageJSON = JSON.parse(viewProductStorage);
+    calcSumQuantity(viewProductStorageJSON);
+} 
+
+const calcSumQuantity = (viewProductStorageJSON) => viewProductStorageJSON.forEach(product => {
+    quantityValue = Number(product.quantity);
+    sumQuantityCount += quantityValue;
+    countQuantity.textContent = sumQuantityCount;
+    console.log(sumQuantityCount);
+    if ( sumQuantityCount < 100 && sumQuantityCount > 1) {
+        countQuantity.style.display = 'flex';
+    }
+});
+
+
+
+
 const getProductOnStorage = (data) => {
     // Ecoute le click du bouton 'ajouter au panier' et envoie les données.
-    let bidule = document.getElementById('add');
-    bidule.addEventListener('click', () =>  { 
+    let addToShoppingCart = document.getElementById('add');
+    addToShoppingCart.addEventListener('click', () =>  { 
         if (quantityChoiceValue >= 1 ) {
             getCartProductObject(data);
             let productStorage = JSON.parse(localStorage.getItem("viewCartProduct"))
@@ -153,6 +188,7 @@ const getProductOnStorage = (data) => {
                 console.log(productStorage);
             }
             confirmationWindow(); 
+            getSumQuantityOfProduct();
         } else {
             getErrorQuantityWindow();
         }

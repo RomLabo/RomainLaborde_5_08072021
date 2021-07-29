@@ -24,7 +24,7 @@
                 <ul id="nav-item" class="nav__list">
                     <li class="nav-list__sign"><a class="item__link" href="#"><i class="fas fa-user-plus"></i>S'inscrire</a></li>
                     <li class="nav-list__item"><a class="item__link" href="#"><i class="fas fa-user"></i>Mon compte</a></li>
-                    <li class="nav-list__item"><a class="item__link" href="shopping-cart.html"><i class="fas fa-shopping-cart"></i>Panier</a></li>
+                    <li class="nav-list__cart"><span id="count" class="nav-list__cart__count"></span><a class="item__link" href="shopping-cart.html"><i class="fas fa-shopping-cart"></i>Panier</a></li>
                 </ul>
             </nav>
         </header>
@@ -47,7 +47,7 @@
                             <td id="quantityStor" class="cart-product__quantity"></td>
                             <td id="optionStor" class="cart-product__price"></td>
                             <td id="priceStor" class="cart-product__price"></td>
-                            <td class="cart-product__btn"><button id="removeItem" name="Remove"><i class="fas fa-times"></i></button></td>
+                            <td class="cart-product__btn"><button id="remove-item" name="Remove" class="remove"><i class="fas fa-times"></i></button></td>
                         </tr>
                     </template>
                 </table>

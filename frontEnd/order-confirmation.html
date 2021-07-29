@@ -36,10 +36,13 @@
             <section class="section">
                 <img class="section__img" src="./img/image.jpg" alt="Appareil photo vintage sur un plancher en bois" />
                 <h2 class="section__title">Appareils photos vintage</h2>
-                <div id="order-confirm" class="empty-cart">
-                    <p id="confirm-name"></p>
-                    <p id="confirm-orderId-address"></p>
-                    <p id="confirm-email"></p>
+                <div id="order-confirm" class="confirmation-message">
+                    <div class="confirmation-message__text">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Merci<span id="confirm-name" class="confirmation-message__value"></span> pour votre commande.</p>    
+                    </div>
+                    <p id="confirm-orderId-address">Nos équipes mettent tout en oeuvre pour vous livrer votre commande n° <span id="confirm-orderId" class="confirmation-message__value"></span>, dans les plus brefs délais à l'adresse : <span id="confirm-address" class="confirmation-message__value"></span> <span id="confirm-city" class="confirmation-message__value"></span>.</p>
+                    <p>Un email de confirmation vient d'être envoyé à: <span id="confirm-email" class="confirmation-message__value"></span>.</p>
                     <div class="product-more">
                         <a id="return-home" href="../index.html" class="footer-list__item" title="Retour à l'accueil">Revenir à l'accueil</a>
                         <button id="see-invoice" class="footer-list__item">Voir la facture</button>
