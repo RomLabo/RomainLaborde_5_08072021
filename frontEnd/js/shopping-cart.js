@@ -7,10 +7,9 @@ console.log(viewProductStorage);
 let viewProductStorageJSON = JSON.parse(viewProductStorage);
 console.log(viewProductStorageJSON);
 
-if (viewProductStorageJSON == null) {
-    let cartInfo = document.getElementById('cart-info');
-    cartInfo.style.display = 'flex';
-} 
+let cartInfo = document.getElementById('cart-info');
+viewProductStorageJSON == null ? cartInfo.style.display = 'flex' : cartInfo.style.display = 'none';
+    
 // Pour récupérer par la suite le total des prix.
 let sumProductsPriceStorage = 0;
 
@@ -86,6 +85,7 @@ getSumPriceProductStorage();
 
 
 // variables stockant les données du formulaire de contact.
+const contactForm = document.getElementById('form');
 const purchaseBtn = document.getElementById("purchase-btn");
 const userPostCode = document.getElementById("user_postcode");
 const userMail = document.getElementById('user_mail');
@@ -107,7 +107,7 @@ const cityRegex = /^[A-Z][a-z]/;
 
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
-const firstNameValid = () => {
+const checkFirstNameIsValid = () => {
     userFirstName.addEventListener("input", function(e) {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (firstNameRegex.test(e.target.value)) {
@@ -117,11 +117,11 @@ const firstNameValid = () => {
         }
     })
 }
-firstNameValid();
+checkFirstNameIsValid();
 
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
-const nameValid = () => {
+const checkNameIsValid = () => {
     userName.addEventListener('input', function(e) {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (nameRegex.test(e.target.value)) {
@@ -131,11 +131,11 @@ const nameValid = () => {
         }
     })
 } 
-nameValid();
+checkNameIsValid();
 
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
-const mailValid = () => {
+const checkMailIsValid = () => {
     userMail.addEventListener("input", function(e) {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (emailRegex.test(e.target.value)) {
@@ -145,11 +145,11 @@ const mailValid = () => {
         }
     })
 }
-mailValid();
+checkMailIsValid();
 
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
-const postCodeValid = () => {
+const checkPostCodeIsValid = () => {
     userPostCode.addEventListener("input", function(e) {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (postCodeRegex.test(e.target.value)) {
@@ -160,10 +160,10 @@ const postCodeValid = () => {
     })
      
 }
-postCodeValid();
+checkPostCodeIsValid();
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
-const addressValid = () => {
+const checkAddressIsValid = () => {
     userAddress.addEventListener("input", function(e) {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (addressRegex.test(e.target.value)) {
@@ -173,10 +173,10 @@ const addressValid = () => {
         }
     })
 }
-addressValid();
+checkAddressIsValid();
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
-const cityValid = () => {
+const checkCityIsValid = () => {
     userCity.addEventListener("input", function(e) {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (cityRegex.test(e.target.value)) {
@@ -186,7 +186,7 @@ const cityValid = () => {
         }
     })
 }
-cityValid();
+checkCityIsValid();
 
 
 // Ecoute d'un input vide pour détecter une attaque.
@@ -194,13 +194,11 @@ const inputDetect = document.getElementById('input-detect');
 inputDetect.addEventListener("input", function(a) {
     if ((a.target.value) != "") {
         alert("Tentative d'intrusion détectée");
-        // Appel d'une fonction qui rejetera la requête.
     }
 }); 
 
 
 // Ecoute le changement de valeur de chaque champs du formulaire et active le bouton commander et créer un objet contact. 
-const contactForm = document.getElementById('form');
 let contact = '';
 contactForm.addEventListener('change', function(z) {
     if ((userName.value != "") && (userFirstName.value != "") && (userMail.value != "") && (userPostCode.value != "") && (userAddress.value != "") && (userCity.value != "")) {
@@ -219,40 +217,44 @@ contactForm.addEventListener('change', function(z) {
 
 // Création d'un tableau contenant les références des tout les produits du panier.
 let products = [];
-viewProductStorageJSON.forEach(function(item) {
+viewProductStorageJSON.forEach(item => {
     products.push(item.ref);
 });
-//console.log(products);
 
 
-// Autorise la requête à l'api si les champs du formulaire comporte des valeurs conforme au attentes.
-const formValid = () => {
+
+// Contrôle que les informations renseignées par l'utilisateur sont valides.
+const checkFormIsValid = () => {
     if (!((nameRegex.test(userName)) && (firstNameRegex.test(userFirstName)) && (emailRegex.test(userMail)) && (postCodeRegex.test(userPostCode)) && (addressRegex.test(userAddress)) && (cityRegex.test(userCity)))) {
-        fetch("http://localhost:3000/api/cameras/order", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ contact, products }),
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                    localStorage.setItem("contact", JSON.stringify(contact));
-                    localStorage.setItem("products", JSON.stringify(products));
-                    localStorage.setItem("orderId", JSON.stringify(data.orderId));
-                    document.location.href = "order-confirmation.html";
-                })
-                .catch((erreur) => console.log("erreur : " + erreur));
-        // Autoriser la requête.
+        sendOrder();
     } else {
-        alert('Erreur');
-        // Refuser la requête et afficher un message comme pour indiquer le panier vide.
+        alert('Erreur : veuillez vérifier les informations renseignées');
     }
 }
 
 
+// Envoi des informations de la commande.
+const sendOrder = () => {
+    fetch("http://localhost:3000/api/cameras/order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ contact, products }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            localStorage.setItem("contact", JSON.stringify(contact));
+            localStorage.setItem("products", JSON.stringify(products));
+            localStorage.setItem("orderId", JSON.stringify(data.orderId));
+            document.location.href = "order-confirmation.html";
+        })
+        .catch((erreur) => console.log("erreur : " + erreur)); 
+} 
+
+
 // Ecoute le click du bouton commander et envoie la requête si la condition est respectée.
-purchaseBtn.addEventListener('click', formValid);
+purchaseBtn.addEventListener('click', checkFormIsValid);
 
 
 

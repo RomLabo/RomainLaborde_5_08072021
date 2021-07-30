@@ -1,37 +1,25 @@
 const apiUrl = "http://localhost:3000/api/cameras";
 
-const productId = window.location.search.substr(5);
+const productId = window.location.search.substring(5);
 
 // Requête à l'api avec l'id du produit sélectionné
 fetch(apiUrl + "/" + productId)
-    .then((response) => 
-        response.json()
-    .then((data) => {
-            // Condition pour vérifier les donnés envoyer dans l'url.
-            if (productId === data._id) {
-                // Création d'un élément contenant les valeurs du produit sélectionné
-                getProduct(data);
-            } else {
-               urlAlert();
-            }
-        }) 
-    ).catch((err) => console.log('Error :' + err)
-);
+    .then((response) => response.json())
+    .then((data) => (productId === data._id) ? addProduct(data) : displayUrlAlert())
+    .catch((err) => console.log('Error :' + err))
+;
 
 
 // Créer un article avce toutes les informations liés au produit sélectionné.
-const getProduct = (data) => {
-    // Ajout de ces éléments dans leur conteneur
-    viewItem(data);
-    // Ajout des options du produit
-    getLensesOption(data);
-    // Ajout d'un sélecteur de quantité 
+const addProduct = (data) => {
+    createItem(data);
+    addLensesOption(data);
     populateStorage(data); 
 }
 
 
 // Ajout des valeurs du produit à chaque élément composant l'élément 'article'.
-const viewItem = (data) => {
+const createItem = (data) => {
     document.getElementById("articleId").setAttribute("id", data._id);
     document.getElementById("articleTitle").textContent = data.name;
     document.getElementById("articlePrice").textContent = (new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(data.price / 1000));
@@ -41,7 +29,7 @@ const viewItem = (data) => {
 
 
 // Pour chaque objectifs du produit il sera crée une option dans l'élément 'select'
-const getLensesOption = (data) => {
+const addLensesOption = (data) => {
     let allLenses = data.lenses;
     let lensesOption = `<option value="option">Choisir une option</option>`;
         for (let lense of allLenses) {
@@ -52,26 +40,24 @@ const getLensesOption = (data) => {
 
 
 // Change le texte du titre principal de la page par un message d'alerte si une érreur est détecté dans l'url.
-const urlAlert = () => {
+const displayUrlAlert = () => {
     document.getElementById('sectionTitle').textContent = "Un problème est servenu veuillez revenir sur la page principal, Merci.";
     document.getElementById('product').style.display = 'none';
 } 
 
 
-const getConfirmationWindow = document.getElementById('window-confirmation');
-const windowProduct = document.querySelector('article.product');
-
-
 // Affiche une fenêtre pour confirmer l'ajout du produit au panier.
-const confirmationWindow = () => {
-    getConfirmationWindow.style.display = 'flex';
+const confirmationWindow = document.getElementById('window-confirmation');
+const windowProduct = document.querySelector('article.product');
+const displayConfirmationWindow = () => {
+    confirmationWindow.style.display = 'flex';
     windowProduct.style.opacity = '0.2';
 }
 
 
 // Ferme la fenêtre de confirmation.
 const closeConfirmationWindow = () => {
-    getConfirmationWindow.style.display = 'none';
+    confirmationWindow.style.display = 'none';
     windowProduct.style.opacity = '1';
 }
 
@@ -81,11 +67,9 @@ confirmationWindowBtn.addEventListener('click', closeConfirmationWindow);
 
 
 
-const errorQuantityWindow = document.getElementById('window-error-quantity');
-
-
 // Affiche une fenêtre pour informer de l'absence de quantité séléctionnée pour le produit.
-const getErrorQuantityWindow = () => {
+const errorQuantityWindow = document.getElementById('window-error-quantity');
+const displayErrorQuantityWindow = () => {
     errorQuantityWindow.style.display = 'flex';
     windowProduct.style.opacity = '0.2';
 }
@@ -105,7 +89,7 @@ errorQuantityWindowBtn.addEventListener('click', closeErrorQuantityWindow);
 // Récupère l'option choisie.
 let optionChoiceValue = '';
 const getOptionChoiceValue = () => {
-    let optionChoice = document.getElementById('lenses-select');
+    optionChoice = document.getElementById('lenses-select');
     optionChoice.addEventListener('change', (e) => {
         optionChoiceValue = e.target.value;
     })
@@ -113,7 +97,7 @@ const getOptionChoiceValue = () => {
 
 // Créer un objet avec les différentes valeurs du produit.
 let cartProduct = '';
-const getCartProductObject = (data) => {
+const createCartProductObject = (data) => {
     cartProduct = {
         ref: data._id,
         price: data.price * quantityChoiceValue,
@@ -128,9 +112,7 @@ const getCartProductObject = (data) => {
 let quantityChoiceValue = '';
 const getQuantityChoiceValue = () => {
     let quantityOfProduct = document.getElementById('quantity');
-    quantityOfProduct.addEventListener('change', (event) =>  {
-        quantityChoiceValue = event.target.value; 
-    })
+    quantityOfProduct.addEventListener('change', (event) =>  quantityChoiceValue = event.target.value)
 }
 
 // Ajoute un compteur de produit au bouton panier.
@@ -144,9 +126,9 @@ let countQuantity = document.getElementById('count');
 quantityValue = Number(product.quantity);
 countQuantity.textContent = quantityValue;
 
-if ( quantityValue < 100 && quantityValue > 1) {
-    countQuantity.style.display = 'flex';
-}
+( quantityValue < 100 && quantityValue > 1) ? countQuantity.style.display = 'flex' : countQuantity.style.display = 'none' ; 
+    
+
 
 // 
 let getSumQuantityOfProduct = () => {
@@ -168,12 +150,12 @@ const calcSumQuantity = (viewProductStorageJSON) => viewProductStorageJSON.forEa
 
 
 
-const getProductOnStorage = (data) => {
+const addProductOnStorage = (data) => {
     // Ecoute le click du bouton 'ajouter au panier' et envoie les données.
     let addToShoppingCart = document.getElementById('add');
     addToShoppingCart.addEventListener('click', () =>  { 
         if (quantityChoiceValue >= 1 ) {
-            getCartProductObject(data);
+            createCartProductObject(data);
             let productStorage = JSON.parse(localStorage.getItem("viewCartProduct"))
             if (productStorage) {
                 // Ajoute les données du produit dans le localStorage
@@ -187,10 +169,10 @@ const getProductOnStorage = (data) => {
                 localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
                 console.log(productStorage);
             }
-            confirmationWindow(); 
+            displayConfirmationWindow(); 
             getSumQuantityOfProduct();
         } else {
-            getErrorQuantityWindow();
+            displayErrorQuantityWindow();
         }
     })
 }
@@ -199,7 +181,7 @@ const getProductOnStorage = (data) => {
 const populateStorage = (data) => {
     getOptionChoiceValue();
     getQuantityChoiceValue();
-    getProductOnStorage(data);
+    addProductOnStorage(data);
 }
 
 

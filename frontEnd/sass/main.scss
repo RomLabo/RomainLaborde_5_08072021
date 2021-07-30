@@ -25,6 +25,9 @@ body {
         width: 90%;
     }
     &__btn {
+        @media print {
+            display: none;
+        }
         display: none;
         font-size: 1.8rem;
         width: 3rem;
@@ -39,6 +42,9 @@ body {
             color: #2e2e2e;
         }
         @media (max-width: 600px) {
+            @media print {
+                display: none;
+            }
             display: flex;
         }
     }
@@ -48,7 +54,13 @@ body {
         justify-content: flex-end;
         list-style-type: none;
         gap: 1rem;
+        @media print {
+            display: none;
+        }
         @media (max-width: 600px) {
+            @media print {
+                display: none;
+            }
             width: 100%;
             flex-direction: column;
             align-items: center;
@@ -60,6 +72,9 @@ body {
 } 
 
 .nav-list__item {
+    @media print {
+        display: none;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,6 +94,9 @@ body {
         
 }
 .nav-list__sign {
+    @media print {
+        display: none;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,6 +119,9 @@ body {
 }
 
 .nav-list__cart {
+    @media print {
+        display: none;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
@@ -155,11 +176,17 @@ body {
         }
     }
     &__title {
+        @media print {
+            display: none;
+        }
         position: absolute;
         text-align: center;
         text-shadow: 2px 2px #1D8177;
     }
     &__text {
+        @media print {
+            display: none;
+        }
         position: absolute;
         top: 3rem;
         text-align: center;
@@ -179,6 +206,9 @@ body {
     align-items: center;
     gap: 2rem;
     &__title {
+        @media print {
+            display: none;
+        }
         color: #2E2E2E;
         width: 100%;
         height: auto;
@@ -198,6 +228,9 @@ body {
         }
     }
     &__img {
+        @media print {
+            display: none;
+        }
         height: 15rem;
         width: 100%;
         object-fit: cover;
@@ -297,6 +330,9 @@ body {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    @media print {
+        display: none;
+    }
 }
 
 button {
@@ -319,6 +355,9 @@ button {
 .footer { 
     width: 100%;
     height: auto;
+    @media print {
+        display: none;
+    }
 }
 .footer-list {
     width: 100%;
@@ -504,5 +543,24 @@ button {
     }
     &__value {
         font-weight: bold;
+    }
+}
+
+.invoice {
+    display: none;
+    flex-direction: column;
+    width: 60%;
+    height: auto;
+    padding: 2%;
+    background-color: #fff;
+    border-radius: 1rem;
+    border: 0.25rem solid #fff; 
+    box-shadow: inset 3px 3px #2e2e2e, inset -3px -3px #2e2e2e ;
+    text-align: center; 
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    @media print {
+        display: flex;
     }
 }

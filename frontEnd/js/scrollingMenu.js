@@ -1,29 +1,27 @@
-// Ecoute le changement de taille de la fenêtre.
-window.addEventListener('resize', conditionMenu)
+const windowWidth = window.innerWidth;
+const scrollingMenuBtn = document.getElementById('nav-btn');
+let scrollingMenuNav = '';
+let scrollingMenuNavState = '';
 
 
-// Vérifie la taille de la fenêtre avant découter le click sur le bouton menu.
-function conditionMenu() {
-    var elementBtn = document.getElementById('nav-btn');
-    var elementNav = document.getElementById('nav-item');
-    var windowWidth = window.innerWidth;
-    if (windowWidth <= 600){
-        elementNav.style.display = 'none';
-        elementBtn.addEventListener('click', menuDeroulant);
-    } else {
-        // Permet de garder le menu apparant lorsque l'on repasse à une taille de fenêtre > 600px.
-        elementNav.style.display = 'flex';
-    }
+// Vérifie la taille de la fenêtre pour faire apparaître le menu.
+const conditionOfDisplayMenu = (scrollingMenuNav) => {
+    scrollingMenuNav = document.getElementById('nav-item');
+    windowWidth <= 600 ? scrollingMenuNav.style.display = 'none' : scrollingMenuNav.style.display = 'flex';
 }
 
 
+// Ecoute le changement de taille de la fenêtre.  
+window.addEventListener('resize', conditionOfDisplayMenu);
+
+
 // Fait apparaître les liens de navigation lors de l'appui sur le bouton menu.
-function menuDeroulant(elementNav) {
-    var elementNav = document.getElementById('nav-item');
-    var etat = elementNav.style.display;
-    if (etat == 'flex') {
-        elementNav.style.display = 'none';
-    } else {
-        elementNav.style.display = 'flex';
-    };
-};
+const displayScrollingMenu = (scrollingMenuNav) => {
+    scrollingMenuNav = document.getElementById('nav-item');
+    scrollingMenuNavState = scrollingMenuNav.style.display;
+    scrollingMenuNavState == 'flex' ? scrollingMenuNav.style.display = 'none' : scrollingMenuNav.style.display = 'flex';
+}
+
+
+// Ecoute le click sur le bouton menu.
+scrollingMenuBtn.addEventListener('click', displayScrollingMenu);
