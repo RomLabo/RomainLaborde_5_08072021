@@ -1,11 +1,11 @@
 // Récupêre les données de localStorage
 let viewProductStorage = localStorage.getItem('viewCartProduct');
-console.log(viewProductStorage);
+//console.log(viewProductStorage);
 
 
 // Analyse la chaine de caractère et construit une valeur javascript.
 let viewProductStorageJSON = JSON.parse(viewProductStorage);
-console.log(viewProductStorageJSON);
+//console.log(viewProductStorageJSON);
 
 let cartInfo = document.getElementById('cart-info');
 viewProductStorageJSON == null ? cartInfo.style.display = 'flex' : cartInfo.style.display = 'none';
@@ -50,13 +50,10 @@ let getSumQuantityOfProduct = () => viewProductStorageJSON.forEach(product => {
     sumQuantityCount += quantityValue;
     countQuantity.textContent = sumQuantityCount;
     console.log(sumQuantityCount);
-    if ( sumQuantityCount < 100 && sumQuantityCount > 1) {
+    if ( sumQuantityCount < 100 && sumQuantityCount > 0) {
         countQuantity.style.display = 'flex';
     }
 });
-getSumQuantityOfProduct();
-
-
 
 
 // Pour chaque produit stocké dans le storage, est crée une ligne de tableau et son prix est ajouté au précédent.
@@ -65,7 +62,6 @@ let getSumPriceOfProduct = () => viewProductStorageJSON.forEach(product => {
     sumProductsPriceStorage += product.price;
     console.log(sumProductsPriceStorage);
 });
-getSumPriceOfProduct();
 
 
 // Fonction pour vider le panier et le local storage.
@@ -81,7 +77,7 @@ removeAllProducts.addEventListener('click', removeAll);
 
 
 // Affiche le prix total.
-getSumPriceProductStorage();
+
 
 
 // variables stockant les données du formulaire de contact.
@@ -99,25 +95,33 @@ const userAddress = document.getElementById('user_address');
 const postCodeRegex = /^((0[1-9])|([1-8][0-9])|(9[0-8]))[0-9]{3}$/;
 const emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 const firstNameRegex = /^[A-Z][A-Za-z\é\è\ê\ï\-]+$/;
-const nameRegex = /^[A-Z][a-z]/;
+const nameRegex = /^[A-Z][A-Za-z\é\è\ê\ï\-]+$/;
 const addressRegex = /^(([a-zA-ZÀ-ÿ0-9]+[\s\-]{1}[a-zA-ZÀ-ÿ0-9]+)){1,10}$/;
-const cityRegex = /^[A-Z][a-z]/;
+const cityRegex = /^[A-Z][A-Za-z\é\è\ê\ï\-]+$/;
 
-
-
+let inputControlerFirstName;
+let inputControlerName;
+let inputControlerMail;
+let inputControlerPostCode;
+let inputControlerAddress;
+let inputControlerCity;
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
 const checkFirstNameIsValid = () => {
     userFirstName.addEventListener("input", function(e) {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (firstNameRegex.test(e.target.value)) {
-            userFirstName.style.backgroundColor = 'green';
+            userFirstName.style.border = '5px solid green';
+            inputControlerFirstName = true;
+            console.log(inputControlerFirstName);
         } else {
-            userFirstName.style.backgroundColor = 'red';
+            userFirstName.style.border = '5px solid red';
+            inputControlerFirstName = false;
+            console.log(inputControlerFirstName);
         }
     })
 }
-checkFirstNameIsValid();
+
 
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
@@ -126,12 +130,15 @@ const checkNameIsValid = () => {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (nameRegex.test(e.target.value)) {
             userName.style.backgroundColor = 'green';
+            inputControlerName = true;
+            console.log(inputControlerName);
         } else {
             userName.style.backgroundColor = 'red';
+            inputControlerName = false; 
         }
     })
 } 
-checkNameIsValid();
+
 
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
@@ -140,12 +147,15 @@ const checkMailIsValid = () => {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (emailRegex.test(e.target.value)) {
             userMail.style.backgroundColor = 'green';
+            inputControlerMail = true;
+            console.log(inputControlerMail);
         } else {
             userMail.style.backgroundColor = 'red';
+            inputControlerMail = false;
         }
     })
 }
-checkMailIsValid();
+
 
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
@@ -154,13 +164,16 @@ const checkPostCodeIsValid = () => {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (postCodeRegex.test(e.target.value)) {
             userPostCode.style.backgroundColor = 'green';
+            inputControlerPostCode = true;
+            console.log(inputControlerPostCode);
         } else {
             userPostCode.style.backgroundColor = 'red';
+            inputControlerPostCode = false;
         }
     })
      
 }
-checkPostCodeIsValid();
+
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
 const checkAddressIsValid = () => {
@@ -168,12 +181,15 @@ const checkAddressIsValid = () => {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (addressRegex.test(e.target.value)) {
             userAddress.style.backgroundColor = 'green';
+            inputControlerAddress = true;
+            console.log(inputControlerAddress);
         } else {
             userAddress.style.backgroundColor = 'red';
+            inputControlerAddress = false; 
         }
     })
 }
-checkAddressIsValid();
+
 
 // Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
 const checkCityIsValid = () => {
@@ -181,12 +197,14 @@ const checkCityIsValid = () => {
         // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (cityRegex.test(e.target.value)) {
             userCity.style.backgroundColor = 'green';
+            inputControlerCity = true;
         } else {
             userCity.style.backgroundColor = 'red';
+            inputControlerCity = false;
         }
     })
 }
-checkCityIsValid();
+
 
 
 // Ecoute d'un input vide pour détecter une attaque.
@@ -196,13 +214,18 @@ inputDetect.addEventListener("input", function(a) {
         alert("Tentative d'intrusion détectée");
     }
 }); 
-
+checkFirstNameIsValid();
+checkNameIsValid();
+checkMailIsValid();
+checkPostCodeIsValid();
+checkAddressIsValid();
+checkCityIsValid();
 
 // Ecoute le changement de valeur de chaque champs du formulaire et active le bouton commander et créer un objet contact. 
 let contact = '';
 contactForm.addEventListener('change', function(z) {
     if ((userName.value != "") && (userFirstName.value != "") && (userMail.value != "") && (userPostCode.value != "") && (userAddress.value != "") && (userCity.value != "")) {
-        purchaseBtn.removeAttribute('disabled');
+        checkFormIsValid();
         contact = {
             firstName: userName.value,
             lastName: userFirstName.value,
@@ -211,24 +234,37 @@ contactForm.addEventListener('change', function(z) {
             email: userMail.value,
         };
         //console.log(contact);
-    }
+    } 
 });
 
 
 // Création d'un tableau contenant les références des tout les produits du panier.
 let products = [];
-viewProductStorageJSON.forEach(item => {
+const addItemOfProdusts = () => viewProductStorageJSON.forEach(item => {
     products.push(item.ref);
 });
 
 
+// Vérifie que le local storage ne soit pas vide.
+if (viewProductStorageJSON != null) {
+    getSumPriceOfProduct();
+    getSumQuantityOfProduct();
+    addItemOfProdusts();
+    getSumPriceProductStorage();
+}
+
 
 // Contrôle que les informations renseignées par l'utilisateur sont valides.
 const checkFormIsValid = () => {
-    if (!((nameRegex.test(userName)) && (firstNameRegex.test(userFirstName)) && (emailRegex.test(userMail)) && (postCodeRegex.test(userPostCode)) && (addressRegex.test(userAddress)) && (cityRegex.test(userCity)))) {
-        sendOrder();
+    if ((inputControlerFirstName === true) 
+    && (inputControlerName === true)
+    && (inputControlerMail === true) 
+    && (inputControlerAddress === true) 
+    && (inputControlerPostCode === true)
+    && (inputControlerCity === true))  {
+        purchaseBtn.removeAttribute('disabled');
     } else {
-        alert('Erreur : veuillez vérifier les informations renseignées');
+        purchaseBtn.setAttribute('disabled', true)
     }
 }
 
@@ -254,7 +290,7 @@ const sendOrder = () => {
 
 
 // Ecoute le click du bouton commander et envoie la requête si la condition est respectée.
-purchaseBtn.addEventListener('click', checkFormIsValid);
+purchaseBtn.addEventListener('click', sendOrder);
 
 
 

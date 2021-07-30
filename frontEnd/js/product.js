@@ -68,22 +68,22 @@ confirmationWindowBtn.addEventListener('click', closeConfirmationWindow);
 
 
 // Affiche une fenêtre pour informer de l'absence de quantité séléctionnée pour le produit.
-const errorQuantityWindow = document.getElementById('window-error-quantity');
-const displayErrorQuantityWindow = () => {
-    errorQuantityWindow.style.display = 'flex';
+const errorChoiceWindow = document.getElementById('window-error-quantity');
+const displayErrorChoiceWindow = () => {
+    errorChoiceWindow.style.display = 'flex';
     windowProduct.style.opacity = '0.2';
 }
 
 
 // Ferme la fenêtre d'erreur.
-const closeErrorQuantityWindow = () => {
-    errorQuantityWindow.style.display = 'none';
+const closeErrorChoiceWindow = () => {
+    errorChoiceWindow.style.display = 'none';
     windowProduct.style.opacity = '1';
 }
 
 // Ecoute le click du bouton de fermeture de la fenêtre d'erreur.
-const errorQuantityWindowBtn = document.getElementById('error-btn');
-errorQuantityWindowBtn.addEventListener('click', closeErrorQuantityWindow);
+const errorChoiceWindowBtn = document.getElementById('error-btn');
+errorChoiceWindowBtn.addEventListener('click', closeErrorChoiceWindow);
 
 
 // Récupère l'option choisie.
@@ -92,8 +92,10 @@ const getOptionChoiceValue = () => {
     optionChoice = document.getElementById('lenses-select');
     optionChoice.addEventListener('change', (e) => {
         optionChoiceValue = e.target.value;
+        console.log(optionChoiceValue);
     })
 }
+
 
 // Créer un objet avec les différentes valeurs du produit.
 let cartProduct = '';
@@ -154,7 +156,7 @@ const addProductOnStorage = (data) => {
     // Ecoute le click du bouton 'ajouter au panier' et envoie les données.
     let addToShoppingCart = document.getElementById('add');
     addToShoppingCart.addEventListener('click', () =>  { 
-        if (quantityChoiceValue >= 1 ) {
+        if ((quantityChoiceValue >= 1 ) && (optionChoiceValue != '')) {
             createCartProductObject(data);
             let productStorage = JSON.parse(localStorage.getItem("viewCartProduct"))
             if (productStorage) {
@@ -172,7 +174,7 @@ const addProductOnStorage = (data) => {
             displayConfirmationWindow(); 
             getSumQuantityOfProduct();
         } else {
-            displayErrorQuantityWindow();
+            displayErrorChoiceWindow();
         }
     })
 }
