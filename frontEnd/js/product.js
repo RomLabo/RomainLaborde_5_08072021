@@ -122,48 +122,51 @@ let viewProductStorage = localStorage.getItem('viewCartProduct');
 let viewProductStorageJSON = JSON.parse(viewProductStorage);
 
 
+
+// Ajoute un compteur de produit au bouton panier.
 let quantityValue = '';
 let sumQuantityCount = 0;
 let countQuantity = document.getElementById('count');
-quantityValue = Number(product.quantity);
-countQuantity.textContent = quantityValue;
-
-( quantityValue < 100 && quantityValue > 1) ? countQuantity.style.display = 'flex' : countQuantity.style.display = 'none' ; 
-    
-
-
-// 
-let getSumQuantityOfProduct = () => {
-    let viewProductStorage = localStorage.getItem('viewCartProduct');
-    let viewProductStorageJSON = JSON.parse(viewProductStorage);
-    calcSumQuantity(viewProductStorageJSON);
-} 
-
-const calcSumQuantity = (viewProductStorageJSON) => viewProductStorageJSON.forEach(product => {
+let getSumQuantityOfProduct = () => viewProductStorageJSON.forEach(product => {
     quantityValue = Number(product.quantity);
     sumQuantityCount += quantityValue;
     countQuantity.textContent = sumQuantityCount;
     console.log(sumQuantityCount);
-    if ( sumQuantityCount < 100 && sumQuantityCount > 1) {
+    if ( sumQuantityCount < 100 && sumQuantityCount > 0) {
         countQuantity.style.display = 'flex';
     }
 });
-
-
+window.onload = getSumQuantityOfProduct;
 
 
 const addProductOnStorage = (data) => {
     // Ecoute le click du bouton 'ajouter au panier' et envoie les données.
     let addToShoppingCart = document.getElementById('add');
-    addToShoppingCart.addEventListener('click', () =>  { 
+    addToShoppingCart.addEventListener('click', () =>  {
         if ((quantityChoiceValue >= 1 ) && (optionChoiceValue != '')) {
             createCartProductObject(data);
             let productStorage = JSON.parse(localStorage.getItem("viewCartProduct"))
             if (productStorage) {
-                // Ajoute les données du produit dans le localStorage
-                productStorage.push(cartProduct);
-                localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
-                console.log(productStorage);
+                if ((productStorage.some(cartProduct => optionChoiceValue === cartProduct.option)) 
+                && (productStorage.some(cartProduct => cartProduct.ref === cartProduct.ref))) {
+                    let indexProduct;
+                    indexProduct = productStorage.findIndex(cartProduct => optionChoiceValue === cartProduct.option);
+                    //console.log(indexProduct);
+                    //console.log(productStorage);
+                    //console.log('identique');
+                    //console.log(JSON.parse(cartProduct.quantity));
+                    //console.log(productStorage[indexProduct].quantity); 
+                    cartProduct.quantity = JSON.parse(cartProduct.quantity) + JSON.parse(productStorage[indexProduct].quantity); 
+                    cartProduct.price = data.price * cartProduct.quantity;   
+                    console.log(cartProduct.price);
+                    productStorage.splice(indexProduct,1, cartProduct);
+                    localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
+                    console.log(productStorage);
+                } else {
+                    productStorage.push(cartProduct);
+                    localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
+                    console.log(productStorage);
+                }
             } else {
                 // Créer un tableau pour stocker les données du produit si le panier est vide
                 productStorage = [];
@@ -172,7 +175,9 @@ const addProductOnStorage = (data) => {
                 console.log(productStorage);
             }
             displayConfirmationWindow(); 
-            getSumQuantityOfProduct();
+            if (viewProductStorageJSON != null){
+                getSumQuantityOfProduct();
+            }    
         } else {
             displayErrorChoiceWindow();
         }

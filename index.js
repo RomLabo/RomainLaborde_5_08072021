@@ -30,6 +30,26 @@ function viewProduct (product) {
     document.getElementById('products').appendChild(productHtml);
 };
 
+// Ajoute un compteur de produit au bouton panier.
+let viewProductStorage = localStorage.getItem('viewCartProduct');
+let viewProductStorageJSON = JSON.parse(viewProductStorage);
+
+
+
+// Ajoute un compteur de produit au bouton panier.
+let quantityValue = '';
+let sumQuantityCount = 0;
+let countQuantity = document.getElementById('count');
+let getSumQuantityOfProduct = () => viewProductStorageJSON.forEach(product => {
+    quantityValue = Number(product.quantity);
+    sumQuantityCount += quantityValue;
+    countQuantity.textContent = sumQuantityCount;
+    console.log(sumQuantityCount);
+    if ( sumQuantityCount < 100 && sumQuantityCount > 0) {
+        countQuantity.style.display = 'flex';
+    }
+});
+window.onload = getSumQuantityOfProduct;
 
 
 

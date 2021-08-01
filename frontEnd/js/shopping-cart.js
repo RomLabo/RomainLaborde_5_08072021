@@ -56,6 +56,8 @@ let getSumQuantityOfProduct = () => viewProductStorageJSON.forEach(product => {
 });
 
 
+
+
 // Pour chaque produit stocké dans le storage, est crée une ligne de tableau et son prix est ajouté au précédent.
 let getSumPriceOfProduct = () => viewProductStorageJSON.forEach(product => {
     addProductStorage(product);
