@@ -17,14 +17,14 @@
         <!-- Header -->
         <header class="header">
             <nav class="nav">
-                <a href="../index.html" class="nav__img"><img src="img/logo.png" alt="Logo de la société Orinoco" /></a>
+                <a id="logo-btn" href="../index.html" class="nav__img"><img src="img/logo.png" alt="Logo de la société Orinoco" /></a>
                 <button id="nav-btn" class="nav__btn" type="button" data-toggle="" data-target="">
                     <i class="fas fa-bars"></i>
                 </button>
                 <ul id="nav-item" class="nav__list">
                     <li class="nav-list__sign"><a class="item__link" href="#"><i class="fas fa-user-plus"></i>S'inscrire</a></li>
                     <li class="nav-list__item"><a class="item__link" href="#"><i class="fas fa-user"></i>Mon compte</a></li>
-                    <li class="nav-list__item"><a class="item__link" href="shopping-cart.html"><i class="fas fa-shopping-cart"></i>Panier</a></li>
+                    <li class="nav-list__item"><a id="shopping-cart-btn" class="item__link" href="shopping-cart.html"><i class="fas fa-shopping-cart"></i>Panier</a></li>
                 </ul>
             </nav>
         </header>
@@ -41,20 +41,44 @@
                         <i class="fas fa-check-circle"></i>
                         <p>Merci <span id="confirm-name" class="confirmation-message__value"></span> pour votre commande.</p>    
                     </div>
-                    <p id="confirm-orderId-address">Nos équipes mettent tout en oeuvre pour vous livrer votre commande n° <span id="confirm-orderId" class="confirmation-message__value"></span> dans les plus bref délais à l'adresse : <span id="confirm-address" class="confirmation-message__value"></span> <span id="confirm-city" class="confirmation-message__value"></span>.</p>
-                    <p>Un email de confirmation vient d'être envoyé à: <span id="confirm-email" class="confirmation-message__value"></span>.</p>
+                    <p id="confirm-orderId-address">
+                        Nos équipes mettent tout en oeuvre pour vous livrer votre commande
+                        <br> n° <span id="confirm-orderId" class="confirmation-message__value"></span> 
+                        <br>dans les plus bref délais à l'adresse :
+                        <br> <span id="confirm-address" class="confirmation-message__value"></span> 
+                        <span id="confirm-city" class="confirmation-message__value"></span>.
+                    </p>
+                    <p>Un email de confirmation vient d'être envoyé à:<br> <span id="confirm-email" class="confirmation-message__value"></span>.</p>
                     <div class="product-more">
                         <a id="return-home" href="../index.html" class="footer-list__item" title="Retour à l'accueil">Revenir à l'accueil</a>
                         <button id="see-invoice" class="footer-list__item">Voir la facture</button>
                     </div>
                 </div>
                 <div class="invoice">
-                    <h3>facture n° : <span id="invoice-orderId"></span></h3>
-                    <ul>
-                        <li><span id="order-product"></span></li>
-                    </ul>
-                    <p>Prix total de la commande : <span id="order-total-price"></span></p>
+                    <table class="cart-products">
+                        <thead>
+                            <tr>
+                                <th colspan="4">facture n° : <span id="invoice-orderId"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableStor" >
+                            <template id="productTemplate">
+                                <tr id="refStor" class="cart-product">
+                                    <td id="nameStor" class="cart-product__title"></td>
+                                    <td id="quantityStor" class="cart-product__quantity"></td>
+                                    <td id="optionStor" class="cart-product__price"></td>
+                                    <td id="priceStor" class="cart-product__price"></td>
+                                </tr>    
+                            </template>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="4">Prix total de la commande : <span id="order-total-price"></span></th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
+                <h3>Toute l'équipe d'Orinoco vous remercie pour votre commande.</h3>
             </section>
         </main>
 

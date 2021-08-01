@@ -40,15 +40,19 @@ let viewProductStorageJSON = JSON.parse(viewProductStorage);
 let quantityValue = '';
 let sumQuantityCount = 0;
 let countQuantity = document.getElementById('count');
-let getSumQuantityOfProduct = () => viewProductStorageJSON.forEach(product => {
-    quantityValue = Number(product.quantity);
-    sumQuantityCount += quantityValue;
-    countQuantity.textContent = sumQuantityCount;
-    console.log(sumQuantityCount);
-    if ( sumQuantityCount < 100 && sumQuantityCount > 0) {
-        countQuantity.style.display = 'flex';
+let getSumQuantityOfProduct = () => {
+    if (viewProductStorageJSON != null) {
+        viewProductStorageJSON.forEach(product => {
+            quantityValue = Number(product.quantity);
+            sumQuantityCount += quantityValue;
+            countQuantity.textContent = sumQuantityCount;
+            console.log(sumQuantityCount);
+            if ( sumQuantityCount < 100 && sumQuantityCount > 0) {
+                countQuantity.style.display = 'flex';
+            }
+        })
     }
-});
+};
 window.onload = getSumQuantityOfProduct;
 
 

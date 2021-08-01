@@ -27,23 +27,44 @@ getSumPriceOfProduct();
 
 const addInformationForInvoice = () => {
     document.getElementById('invoice-orderId').textContent = (orderStor.substring(5,0)) + (orderStor.substring(26,32));
-    document.getElementById('order-product').textContent = '';
     document.getElementById('order-total-price').textContent =  (new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(sumProductsPriceStorage / 1000));
 }
-addInformationForInvoice();
 
+
+
+const logoMenuBtn = document.getElementById('logo-btn');
+const shoppingCartMenuBtn = document.getElementById('shopping-cart-btn');
 
 
 // Ecoute le click du bouton 'retour à l'accueil' pour effacer le local storage.
 const clearShoppingCart = () => localStorage.clear();
+logoMenuBtn.addEventListener('click', clearShoppingCart);
+shoppingCartMenuBtn.addEventListener('click', clearShoppingCart);
 returnHomeBtn.addEventListener('click', clearShoppingCart);
+
+// Créer une ligne de tableau avec les différentes valeurs du produits.
+const createProductLigne = (product) => {
+    const templateElement = document.getElementById("productTemplate")
+    const productHtml = document.importNode(templateElement.content, true)
+    productHtml.getElementById("refStor").setAttribute('id', product.ref);
+    productHtml.getElementById("nameStor").textContent = product.nameProduct;
+    productHtml.getElementById("quantityStor").textContent = product.quantity;
+    productHtml.getElementById("optionStor").textContent = product.option;
+    productHtml.getElementById("priceStor").textContent = (new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(product.price / 1000));
+    document.getElementById('tableStor').appendChild(productHtml);
+}
+
+const createProductLigneOfInvoice = () => viewProductStorageJSON.forEach(product => createProductLigne(product));
 
 
 // Permet de visualiser la facture et de l'imprimer.
 const printInvoice = () => {
+    addInformationForInvoice();
+    createProductLigneOfInvoice();
     window.document.close(); // necessary for IE >= 10
     window.focus(); // necessary for IE >= 10*/
-    window.print(`Facture de la commande n°${orderStor} <br> <br> Référence du produit : ${productStor}`);
+    window.print();
+    seeInvoice.setAttribute('disabled', true);
 }
 
 

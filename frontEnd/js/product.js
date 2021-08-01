@@ -127,16 +127,27 @@ let viewProductStorageJSON = JSON.parse(viewProductStorage);
 let quantityValue = '';
 let sumQuantityCount = 0;
 let countQuantity = document.getElementById('count');
-let getSumQuantityOfProduct = () => viewProductStorageJSON.forEach(product => {
-    quantityValue = Number(product.quantity);
-    sumQuantityCount += quantityValue;
+let getSumQuantityOfProduct = () => {
+    if (viewProductStorageJSON != null) {
+        viewProductStorageJSON.forEach(product => {
+            quantityValue = Number(product.quantity);
+            sumQuantityCount += quantityValue;
+            countQuantity.textContent = sumQuantityCount;
+            if ( sumQuantityCount < 100 && sumQuantityCount > 0) {
+                countQuantity.style.display = 'flex';
+            }
+        })
+    }
+};
+window.onload = getSumQuantityOfProduct;
+
+const updateSumQuantityOfProduct = () => {
+    sumQuantityCount += Number(quantityChoiceValue);
     countQuantity.textContent = sumQuantityCount;
-    console.log(sumQuantityCount);
     if ( sumQuantityCount < 100 && sumQuantityCount > 0) {
         countQuantity.style.display = 'flex';
     }
-});
-window.onload = getSumQuantityOfProduct;
+};
 
 
 const addProductOnStorage = (data) => {
@@ -150,34 +161,25 @@ const addProductOnStorage = (data) => {
                 if ((productStorage.some(cartProduct => optionChoiceValue === cartProduct.option)) 
                 && (productStorage.some(cartProduct => cartProduct.ref === cartProduct.ref))) {
                     let indexProduct;
+                    let productQuantityChange;
                     indexProduct = productStorage.findIndex(cartProduct => optionChoiceValue === cartProduct.option);
-                    //console.log(indexProduct);
-                    //console.log(productStorage);
-                    //console.log('identique');
-                    //console.log(JSON.parse(cartProduct.quantity));
-                    //console.log(productStorage[indexProduct].quantity); 
-                    cartProduct.quantity = JSON.parse(cartProduct.quantity) + JSON.parse(productStorage[indexProduct].quantity); 
-                    cartProduct.price = data.price * cartProduct.quantity;   
-                    console.log(cartProduct.price);
+                    productQuantityChange = JSON.parse(cartProduct.quantity) + JSON.parse(productStorage[indexProduct].quantity);
+                    cartProduct.quantity = JSON.stringify(productQuantityChange); 
+                    cartProduct.price = data.price * productQuantityChange;   
                     productStorage.splice(indexProduct,1, cartProduct);
                     localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
-                    console.log(productStorage);
                 } else {
                     productStorage.push(cartProduct);
                     localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
-                    console.log(productStorage);
                 }
             } else {
                 // Créer un tableau pour stocker les données du produit si le panier est vide
                 productStorage = [];
                 productStorage.push(cartProduct);
                 localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
-                console.log(productStorage);
             }
             displayConfirmationWindow(); 
-            if (viewProductStorageJSON != null){
-                getSumQuantityOfProduct();
-            }    
+            updateSumQuantityOfProduct();   
         } else {
             displayErrorChoiceWindow();
         }
