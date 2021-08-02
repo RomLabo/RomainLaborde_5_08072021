@@ -154,7 +154,7 @@ const addProductOnStorage = (data) => {
     // Ecoute le click du bouton 'ajouter au panier' et envoie les données.
     let addToShoppingCart = document.getElementById('add');
     addToShoppingCart.addEventListener('click', () =>  {
-        if ((quantityChoiceValue >= 1 ) && (optionChoiceValue != '')) {
+        if ((quantityChoiceValue >= 1 ) && (optionChoiceValue != 'option')) {
             createCartProductObject(data);
             let productStorage = JSON.parse(localStorage.getItem("viewCartProduct"))
             if (productStorage) {

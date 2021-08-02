@@ -1,10 +1,10 @@
 // Récupêre les données de localStorage
-let viewProductStorage = localStorage.getItem('viewCartProduct');
+const viewProductStorage = localStorage.getItem('viewCartProduct');
 //console.log(viewProductStorage);
 
 
 // Analyse la chaine de caractère et construit une valeur javascript.
-let viewProductStorageJSON = JSON.parse(viewProductStorage);
+const viewProductStorageJSON = JSON.parse(viewProductStorage);
 //console.log(viewProductStorageJSON);
 
 let cartInfo = document.getElementById('cart-info');
@@ -24,9 +24,9 @@ let getSumPriceProductStorage = () => {
     document.getElementById('sumPriceProducts').appendChild(sumPriceProductElement);
 }
 
-
+let buttonToRemoveThisProduct;
 // Créer une ligne de tableau avec les différentes valeurs du produits.
-const addProductStorage = (product) => {
+const displayProductOfLocalStorageOnDocument = (product) => {
     const templateElement = document.getElementById("productTemplate")
     const productHtml = document.importNode(templateElement.content, true)
     // Ajoute les valeurs du produit à chaque colonne de la ligne.
@@ -36,8 +36,30 @@ const addProductStorage = (product) => {
     productHtml.getElementById("optionStor").textContent = product.option;
     productHtml.getElementById("priceStor").textContent = (new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(product.price / 1000));
     productHtml.getElementById("remove-item").setAttribute('id', (product.nameProduct + product.option));
-    // Ajout les produits dans son conteneur.
     document.getElementById('tableStor').appendChild(productHtml);
+
+    allButtonToRemoveProduct = document.querySelectorAll(".remove");
+    addDeleteProductOption();
+}
+
+const addDeleteProductOption = () => {
+    let productStorage = JSON.parse(localStorage.getItem("viewCartProduct"))
+    for ( let deleteButton = 0; deleteButton < allButtonToRemoveProduct.length; deleteButton++) {
+        allButtonToRemoveProduct[deleteButton].addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            attributeOfButtonToRemoveThisProduct = allButtonToRemoveProduct[deleteButton].getAttribute('id');
+            removeThisProductInShoppingCart(productStorage);
+        })
+    }
+}
+
+const removeThisProductInShoppingCart = (productStorage) => {
+    const indexOfProductToBeRemove = viewProductStorageJSON.findIndex(product => attributeOfButtonToRemoveThisProduct === (product.nameProduct + product.option));
+    delete productStorage[indexOfProductToBeRemove];
+    productStorage = productStorage.filter(item => item.value != '')
+    localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
+    document.location.reload();
 }
 
 
@@ -60,29 +82,24 @@ let getSumQuantityOfProduct = () => viewProductStorageJSON.forEach(product => {
 
 // Pour chaque produit stocké dans le storage, est crée une ligne de tableau et son prix est ajouté au précédent.
 let getSumPriceOfProduct = () => viewProductStorageJSON.forEach(product => {
-    addProductStorage(product);
+    displayProductOfLocalStorageOnDocument(product);
     sumProductsPriceStorage += product.price;
-    console.log(sumProductsPriceStorage);
 });
 
 
 // Fonction pour vider le panier et le local storage.
-const removeAll = () => {
+const removeAllProducstInShoppingCart = () => {
     localStorage.clear();
     document.location.reload();
 }
 
 
 // Ecoute le click du bouton 'vider le panier' .
-let removeAllProducts = document.getElementById('remove-products');
-removeAllProducts.addEventListener('click', removeAll);
+const buttonToRemoveAllProducts = document.getElementById('remove-products');
+buttonToRemoveAllProducts.addEventListener('click', removeAllProducstInShoppingCart);
 
 
-// Affiche le prix total.
-
-
-
-// variables stockant les données du formulaire de contact.
+// variables stockant les inputs du formulaire de contact.
 const contactForm = document.getElementById('form');
 const purchaseBtn = document.getElementById("purchase-btn");
 const userPostCode = document.getElementById("user_postcode");
