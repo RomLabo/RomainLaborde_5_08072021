@@ -1,11 +1,11 @@
 const apiUrl = "http://localhost:3000/api/cameras";
 
-const productId = window.location.search.substring(5);
+const idOfProduct = window.location.search.substring(5);
 
 // Requête à l'api avec l'id du produit sélectionné
-fetch(apiUrl + "/" + productId)
+fetch(apiUrl + "/" + idOfProduct)
     .then((response) => response.json())
-    .then((data) => (productId === data._id) ? addProduct(data) : displayUrlAlert())
+    .then((data) => (idOfProduct === data._id) ? addProduct(data) : displayUrlAlert())
     .catch((err) => console.log('Error :' + err))
 ;
 
@@ -31,7 +31,7 @@ const createItem = (data) => {
 // Pour chaque objectifs du produit il sera crée une option dans l'élément 'select'
 const addLensesOption = (data) => {
     let allLenses = data.lenses;
-    let lensesOption = `<option value="option">Choisir une option</option>`;
+    let lensesOption = `<option value="">Choisir une option</option>`;
         for (let lense of allLenses) {
             lensesOption += `<option value="${lense}">${lense}</option>`
         }
@@ -154,7 +154,8 @@ const addProductOnStorage = (data) => {
     // Ecoute le click du bouton 'ajouter au panier' et envoie les données.
     let addToShoppingCart = document.getElementById('add');
     addToShoppingCart.addEventListener('click', () =>  {
-        if ((quantityChoiceValue >= 1 ) && (optionChoiceValue != 'option')) {
+        if ((quantityChoiceValue >= 1 ) && (optionChoiceValue != "")) {
+            console.log(optionChoiceValue);
             createCartProductObject(data);
             let productStorage = JSON.parse(localStorage.getItem("viewCartProduct"))
             if (productStorage) {

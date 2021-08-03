@@ -37,7 +37,17 @@
                 <img class="section__img" src="./frontEnd/img/image.jpg" alt="Appareil photo vintage sur un plancher en bois" />
                 <h2 class="section__title">Appareils photos vintage</h2>
                 <div id="products" class="section__products">
-                    
+                    <template id="template-product">
+                        <a href="#" id="product-id" class="product-content" >
+                            <article  class="product">
+                                <img id="product-image" src="./frontEnd/img/logo.png" alt="Un appareil photo vintage" class="product__img"/>
+                                <div class="product__info">
+                                    <h3 id="product-name"></h3>
+                                    <p id="product-price"></p>
+                                </div>
+                            </article>
+                        </a>
+                    </template>
                 </div>
             </section>
         </main>
