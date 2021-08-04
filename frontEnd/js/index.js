@@ -9,10 +9,10 @@ fetch(apiUrl)
 
 
 // Affichage des produits avec leurs données respectives.
-const createProductForEachApiProduct = (data) => data.forEach(product =>  createProductOnHomePage(product));
+const createProductForEachApiProduct = (data) => data.forEach(product =>  createProduct(product));
 
 
-const createProductOnHomePage = (product) => {
+const createProduct = (product) => {
     const modelToBeDuplicated = document.getElementById("template-product")
     const productOnHomePage = document.importNode(modelToBeDuplicated.content, true)
     const urlToThisProductWebpage = "./frontEnd/product.html?ref=" + product._id;
@@ -25,13 +25,12 @@ const createProductOnHomePage = (product) => {
 
 
 // Ajoute un compteur de produit au bouton panier.
-let viewProductStorage = localStorage.getItem('viewCartProduct');
-let viewProductStorageJSON = JSON.parse(viewProductStorage);
+let productsOnLocaleStorage = JSON.parse(localStorage.getItem('viewCartProduct'));
 let sumOfQuantityProducts = 0;
 let counterQuantityDisplay = document.getElementById('count');
 
 
-const calculateSumOfQuantityProducts = () => viewProductStorageJSON.forEach(product => {
+const calculateSumOfQuantityProducts = () => productsOnLocaleStorage.forEach(product => {
     sumOfQuantityProducts += Number(product.quantity);
     counterQuantityDisplay.textContent = sumOfQuantityProducts;
     sumOfQuantityProducts < 100 ? counterQuantityDisplay.style.display = 'flex' : counterQuantityDisplay.style.display = 'none' ;
@@ -39,7 +38,7 @@ const calculateSumOfQuantityProducts = () => viewProductStorageJSON.forEach(prod
 
 
 const getSumOfQuantityProducts = () => {
-    if (viewProductStorageJSON != null) {
+    if (productsOnLocaleStorage != null) {
         calculateSumOfQuantityProducts();
     }
 };

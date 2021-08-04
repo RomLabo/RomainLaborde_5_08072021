@@ -1,35 +1,24 @@
-// Récupêre les données de localStorage
-const viewProductStorage = localStorage.getItem('viewCartProduct');
-//console.log(viewProductStorage);
-
-
-// Analyse la chaine de caractère et construit une valeur javascript.
-const viewProductStorageJSON = JSON.parse(viewProductStorage);
-//console.log(viewProductStorageJSON);
-
+const productsOnLocaleStorage = JSON.parse(localStorage.getItem('viewCartProduct'));
 let cartInfo = document.getElementById('cart-info');
-viewProductStorageJSON == null ? cartInfo.style.display = 'flex' : cartInfo.style.display = 'none';
-    
-// Pour récupérer par la suite le total des prix.
+productsOnLocaleStorage == null ? cartInfo.style.display = 'flex' : cartInfo.style.display = 'none';
 let sumProductsPriceStorage = 0;
 
 
 // Créer un titre h2 avec la somme total des produits et l'injecte dans le document.
-let lengthOfStorage = viewProductStorageJSON?.length;
+let lengthOfStorage = productsOnLocaleStorage?.length;
 let getSumPriceProductStorage = () => {
-    console.log(lengthOfStorage);
     let sumPriceProductElement = document.createElement('h2');
-    sumPriceProductElement.innerHTML = `Total : ${(new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(sumProductsPriceStorage / 1000))}`;
-    console.log(sumPriceProductElement); 
+    sumPriceProductElement.textContent = "Total : " + (new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(sumProductsPriceStorage / 1000)); 
     document.getElementById('sumPriceProducts').appendChild(sumPriceProductElement);
 }
 
+
 let buttonToRemoveThisProduct;
 // Créer une ligne de tableau avec les différentes valeurs du produits.
-const displayProductOfLocalStorageOnDocument = (product) => {
+const displayProductOfLocalStorage = (product) => {
     const templateElement = document.getElementById("productTemplate")
     const productHtml = document.importNode(templateElement.content, true)
-    // Ajoute les valeurs du produit à chaque colonne de la ligne.
+
     productHtml.getElementById("refStor").setAttribute('id', product.ref);
     productHtml.getElementById("nameStor").textContent = product.nameProduct;
     productHtml.getElementById("quantityStor").textContent = product.quantity;
@@ -41,6 +30,7 @@ const displayProductOfLocalStorageOnDocument = (product) => {
     allButtonToRemoveProduct = document.querySelectorAll(".remove");
     addDeleteProductOption();
 }
+
 
 const addDeleteProductOption = () => {
     let productStorage = JSON.parse(localStorage.getItem("viewCartProduct"))
@@ -54,8 +44,9 @@ const addDeleteProductOption = () => {
     }
 }
 
+
 const removeThisProductInShoppingCart = (productStorage) => {
-    const indexOfProductToBeRemove = viewProductStorageJSON.findIndex(product => attributeOfButtonToRemoveThisProduct === (product.nameProduct + product.option));
+    const indexOfProductToBeRemove = productsOnLocaleStorage.findIndex(product => attributeOfButtonToRemoveThisProduct === (product.nameProduct + product.option));
     delete productStorage[indexOfProductToBeRemove];
     productStorage = productStorage.filter(item => item.value != '')
     localStorage.setItem("viewCartProduct", JSON.stringify(productStorage));
@@ -63,26 +54,18 @@ const removeThisProductInShoppingCart = (productStorage) => {
 }
 
 
-// Ajoute un compteur de produit au bouton panier.
-let quantityValue = '';
-let sumQuantityCount = 0;
-let countQuantity = document.getElementById('count');
-let getSumQuantityOfProduct = () => viewProductStorageJSON.forEach(product => {
-    quantityValue = Number(product.quantity);
-    sumQuantityCount += quantityValue;
-    countQuantity.textContent = sumQuantityCount;
-    console.log(sumQuantityCount);
-    if ( sumQuantityCount < 100 && sumQuantityCount > 0) {
-        countQuantity.style.display = 'flex';
-    }
+let sumOfQuantityProducts = 0;
+let counterQuantityDisplay = document.getElementById('count');
+let getSumOfQuantityProducts = () => productsOnLocaleStorage.forEach(product => {
+    sumOfQuantityProducts += Number(product.quantity);
+    counterQuantityDisplay.textContent = sumOfQuantityProducts;
+    sumOfQuantityProducts < 100 ? counterQuantityDisplay.style.display = 'flex' : counterQuantityDisplay.style.display = 'none' ;
 });
 
 
-
-
 // Pour chaque produit stocké dans le storage, est crée une ligne de tableau et son prix est ajouté au précédent.
-let getSumPriceOfProduct = () => viewProductStorageJSON.forEach(product => {
-    displayProductOfLocalStorageOnDocument(product);
+const addProductForEachProducts = () => productsOnLocaleStorage.forEach(product => {
+    displayProductOfLocalStorage(product);
     sumProductsPriceStorage += product.price;
 });
 
@@ -109,6 +92,13 @@ const userName = document.getElementById('user_name');
 const userCity = document.getElementById('user_city');
 const userAddress = document.getElementById('user_address');
 
+const userNameValidIcon = document.getElementById('name-valid');
+const userFirstNameValidIcon = document.getElementById('first-name-valid');
+const userMailValidIcon = document.getElementById('mail-valid');
+const userPostCodeValidIcon = document.getElementById('postcode-valid');
+const userAddressValidIcon = document.getElementById('address-valid');
+const userCityValidIcon = document.getElementById('city-valid');
+
 
 // Variables pour stocker les regexs de chaque champ du formulaire.
 const postCodeRegex = /^((0[1-9])|([1-8][0-9])|(9[0-8]))[0-9]{3}$/;
@@ -125,68 +115,61 @@ let inputControlerPostCode;
 let inputControlerAddress;
 let inputControlerCity;
 
-// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
+
 const checkFirstNameIsValid = () => {
     userFirstName.addEventListener("input", function(e) {
-        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (firstNameRegex.test(e.target.value)) {
-            userFirstName.style.border = '5px solid green';
+            userFirstName.style.border = '2px solid green';
+            userFirstNameValidIcon.style.color = '#2e2e2e';
             inputControlerFirstName = true;
-            console.log(inputControlerFirstName);
         } else {
-            userFirstName.style.border = '5px solid red';
+            userFirstName.style.border = '2px solid red';
+            userFirstNameValidIcon.style.color = 'transparent';
             inputControlerFirstName = false;
-            console.log(inputControlerFirstName);
         }
     })
 }
 
 
-
-// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
 const checkNameIsValid = () => {
     userName.addEventListener('input', function(e) {
-        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (nameRegex.test(e.target.value)) {
-            userName.style.backgroundColor = 'green';
+            userName.style.border = '2px solid green';
+            userNameValidIcon.style.color = '#2e2e2e';
             inputControlerName = true;
-            console.log(inputControlerName);
         } else {
-            userName.style.backgroundColor = 'red';
+            userName.style.border = '2px solid red';
+            userNameValidIcon.style.color = 'transparent';
             inputControlerName = false; 
         }
     })
 } 
 
 
-
-// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
 const checkMailIsValid = () => {
     userMail.addEventListener("input", function(e) {
-        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (emailRegex.test(e.target.value)) {
-            userMail.style.backgroundColor = 'green';
+            userMail.style.border = '2px solid green';
+            userMailValidIcon.style.color = '#2e2e2e';
             inputControlerMail = true;
-            console.log(inputControlerMail);
         } else {
-            userMail.style.backgroundColor = 'red';
+            userMail.style.border = '2px solid red';
+            userMailValidIcon.style.color = 'transparent';
             inputControlerMail = false;
         }
     })
 }
 
-
-
-// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
+ 
 const checkPostCodeIsValid = () => {
     userPostCode.addEventListener("input", function(e) {
-        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (postCodeRegex.test(e.target.value)) {
-            userPostCode.style.backgroundColor = 'green';
+            userPostCode.style.border = '2px solid green';
+            userPostCodeValidIcon.style.color = '#2e2e2e';
             inputControlerPostCode = true;
-            console.log(inputControlerPostCode);
         } else {
-            userPostCode.style.backgroundColor = 'red';
+            userPostCode.style.border = '2px solid red';
+            userPostCodeValidIcon.style.color = 'transparent';
             inputControlerPostCode = false;
         }
     })
@@ -194,36 +177,34 @@ const checkPostCodeIsValid = () => {
 }
 
 
-// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
 const checkAddressIsValid = () => {
     userAddress.addEventListener("input", function(e) {
-        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (addressRegex.test(e.target.value)) {
-            userAddress.style.backgroundColor = 'green';
+            userAddress.style.border = '2px solid green';
+            userAddressValidIcon.style.color = '#2e2e2e';
             inputControlerAddress = true;
-            console.log(inputControlerAddress);
         } else {
-            userAddress.style.backgroundColor = 'red';
+            userAddress.style.border = '2px solid red';
+            userAddressValidIcon.style.color = 'transparent';
             inputControlerAddress = false; 
         }
     })
 }
 
 
-// Ecoute l'input et vérifie que sa valeur soit conforme à son regex. 
 const checkCityIsValid = () => {
     userCity.addEventListener("input", function(e) {
-        // Ajouter des animations pour indiquer a l'utilisateur qu'il y a une erreur.
         if (cityRegex.test(e.target.value)) {
-            userCity.style.backgroundColor = 'green';
+            userCity.style.border = '2px solid green';
+            userCityValidIcon.style.color = '#2e2e2e';
             inputControlerCity = true;
         } else {
-            userCity.style.backgroundColor = 'red';
+            userCity.style.border = '2px solid red';
+            userCityValidIcon.style.color = 'transparent';
             inputControlerCity = false;
         }
     })
 }
-
 
 
 // Ecoute d'un input vide pour détecter une attaque.
@@ -233,12 +214,15 @@ inputDetect.addEventListener("input", function(a) {
         alert("Tentative d'intrusion détectée");
     }
 }); 
+
+
 checkFirstNameIsValid();
 checkNameIsValid();
 checkMailIsValid();
 checkPostCodeIsValid();
 checkAddressIsValid();
 checkCityIsValid();
+
 
 // Ecoute le changement de valeur de chaque champs du formulaire et active le bouton commander et créer un objet contact. 
 let contact = '';
@@ -252,22 +236,21 @@ contactForm.addEventListener('change', function(z) {
             city: userPostCode.value + " " + userCity.value, 
             email: userMail.value,
         };
-        //console.log(contact);
     } 
 });
 
 
 // Création d'un tableau contenant les références des tout les produits du panier.
 let products = [];
-const addItemOfProdusts = () => viewProductStorageJSON.forEach(item => {
+const addItemOfProdusts = () => productsOnLocaleStorage.forEach(item => {
     products.push(item.ref);
 });
 
 
 // Vérifie que le local storage ne soit pas vide.
-if (viewProductStorageJSON != null) {
-    getSumPriceOfProduct();
-    getSumQuantityOfProduct();
+if (productsOnLocaleStorage != null) {
+    addProductForEachProducts();
+    getSumOfQuantityProducts();
     addItemOfProdusts();
     getSumPriceProductStorage();
 }
@@ -313,9 +296,6 @@ purchaseBtn.addEventListener('click', sendOrder);
 
 
 
-
-
-// Styliser avec des animations les erreurs sur les inputs.
 
 
 

@@ -18,7 +18,7 @@
         <header class="header">
             <nav class="nav">
                 <a href="../index.html" class="nav__img"><img src="img/logo.png" alt="Logo de la société Orinoco" /></a>
-                <button id="nav-btn" class="nav__btn" type="button" data-toggle="" data-target="">
+                <button id="nav-btn" class="nav__btn" type="button" data-toggle="" data-target="" title="Menu">
                     <i class="fas fa-bars"></i>
                 </button>
                 <ul id="nav-item" class="nav__list">
@@ -60,26 +60,32 @@
                     <div class="form-content">
                         <label for="user_name" class="form-content__label">Nom :</label>
                         <input type="text" name="user_name" id="user_name" class="form-content__input" placeholder="Haddock" required />
+                        <i id="name-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                     <div class="form-content">
                         <label for="user_first-name" class="form-content__label">Prénom :</label>
                         <input type="text" name="user_first-name" id="user_first-name" class="form-content__input" placeholder="Archibald" required />
+                        <i id="first-name-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                     <div class="form-content">
                         <label for="user_mail" class="form-content__label">E-mail :</label>
                         <input type="email" name="user_mail" id="user_mail" class="form-content__input" placeholder="millesabord@mail.fr" required />
+                        <i id="mail-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                     <div class="form-content">
                         <label for="user_address" class="form-content__label">Adresse :</label>
                         <input type="text" name="user_address" id="user_address" class="form-content__input" placeholder="1 rue de Moulinsart" required />
+                        <i id="address-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                     <div class="form-content">
                         <label for="user_postcode" class="form-content__label">Code postal :</label>
                         <input type="text" name="user_postcode" id="user_postcode" class="form-content__input" placeholder="75000"  required />
+                        <i id="postcode-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                     <div class="form-content">
                         <label for="user_city" class="form-content__label">Ville :</label>
                         <input type="text" name="user_town" id="user_city" class="form-content__input" placeholder="Paris" required />
+                        <i id="city-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                 </form>
                 <p>Appuyer sur ENTREE pour valider le formulaire.</p>

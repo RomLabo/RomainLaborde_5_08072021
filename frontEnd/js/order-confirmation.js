@@ -1,30 +1,30 @@
-const localStorageItemContact = JSON.parse(localStorage.getItem("contact"));
-const localeStorageItemOrderId = JSON.parse(localStorage.getItem("orderId")) ;
-const localeStorageItemViewCartProduct = JSON.parse(localStorage.getItem("viewCartProduct"));
+const itemContactOfLocaleStorage = JSON.parse(localStorage.getItem("contact"));
+const itemOrderIdOfLocaleStorage = JSON.parse(localStorage.getItem("orderId")) ;
+const productsOnLocaleStorage = JSON.parse(localStorage.getItem('viewCartProduct'));
 
 
 // Affiche un message de confirmation de la commande avec ses informations.
 const displayConfirmationOrderMessage = () => {
-    document.getElementById('confirm-message-name').textContent = localStorageItemContact.firstName;
-    document.getElementById('confirm-message-orderId').textContent = localeStorageItemOrderId;
-    document.getElementById('confirm-message-address').textContent = localStorageItemContact.address;
-    document.getElementById('confirm-message-city').textContent = localStorageItemContact.city;
-    document.getElementById('confirm-message-email').textContent = localStorageItemContact.email;
+    document.getElementById('confirm-message-name').textContent = itemContactOfLocaleStorage.firstName;
+    document.getElementById('confirm-message-orderId').textContent = itemOrderIdOfLocaleStorage;
+    document.getElementById('confirm-message-address').textContent = itemContactOfLocaleStorage.address;
+    document.getElementById('confirm-message-city').textContent = itemContactOfLocaleStorage.city;
+    document.getElementById('confirm-message-email').textContent = itemContactOfLocaleStorage.email;
 }
 displayConfirmationOrderMessage();
 
 
 // Pour chaque produit stocké dans le storage, est crée une ligne de tableau et son prix est ajouté au précédent.
 let sumPriceOfProductsStorage ='';
-const displaySumPriceOfProductsStorage = () => localeStorageItemViewCartProduct.forEach(product => {    
+const getSumPriceOfProductsStorage = () => productsOnLocaleStorage.forEach(product => {    
     sumPriceOfProductsStorage += product.price;
     sumPriceOfProductsStorage ++ ;
 });
-displaySumPriceOfProductsStorage();
+getSumPriceOfProductsStorage();
 
 
 const addInformationsForInvoice = () => {
-    document.getElementById('invoice-orderId').textContent = (localeStorageItemOrderId.substring(5,0)) + (localeStorageItemOrderId.substring(26,32));
+    document.getElementById('invoice-orderId').textContent = (itemOrderIdOfLocaleStorage.substring(5,0)) + (itemOrderIdOfLocaleStorage.substring(26,32));
     document.getElementById('order-total-price').textContent =  (new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(sumPriceOfProductsStorage / 1000));
 }
 
@@ -56,7 +56,7 @@ const createProductInformationLigne = (product) => {
 }
 
 
-const createProductInformationLigneForEachProduct = () => localeStorageItemViewCartProduct.forEach(product => createProductInformationLigne(product));
+const createProductInformationLigneForEachProduct = () => productsOnLocaleStorage.forEach(product => createProductInformationLigne(product));
 
 
 // Permet de visualiser la facture et de l'imprimer.
