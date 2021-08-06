@@ -66,9 +66,7 @@ const populateLocalStorage = (data) => {
 let optionChoiceValue = '';
 const getOptionChoiceValue = () => {
     optionChoice = document.getElementById('lenses-select');
-    optionChoice.addEventListener('change', (e) => {
-        optionChoiceValue = e.target.value;
-    })
+    optionChoice.addEventListener('change', (e) => optionChoiceValue = e.target.value)
 }
 
 

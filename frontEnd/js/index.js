@@ -2,10 +2,10 @@ const apiUrl = "http://localhost:3000/api/cameras";
 
 // Requête à l'api pour récupérer ces données.
 fetch(apiUrl)
-    .then((response) =>  response.json()
+    .then((response) =>  response.json())
     .then((data) => createProductForEachApiProduct(data))
-    .catch((err) => console.log('Error :' + err)
-));
+    .catch((err) => console.log('Error :' + err))
+;
 
 
 // Affichage des produits avec leurs données respectives.

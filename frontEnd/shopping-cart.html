@@ -59,32 +59,32 @@
                     <input id="input-detect" type="hidden" name="user_vide" name="user_vide" value="">
                     <div class="form-content">
                         <label for="user_name" class="form-content__label">Nom :</label>
-                        <input type="text" name="user_name" id="user_name" class="form-content__input" placeholder="Haddock" required />
+                        <input type="text" name="user_name" id="user_name" class="form-content__input" placeholder="Haddock" minlength="3" maxlength="30" required />
                         <i id="name-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                     <div class="form-content">
                         <label for="user_first-name" class="form-content__label">Prénom :</label>
-                        <input type="text" name="user_first-name" id="user_first-name" class="form-content__input" placeholder="Archibald" required />
+                        <input type="text" name="user_first-name" id="user_first-name" class="form-content__input" placeholder="Archibald" minlength="3" maxlength="30" required />
                         <i id="first-name-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                     <div class="form-content">
                         <label for="user_mail" class="form-content__label">E-mail :</label>
-                        <input type="email" name="user_mail" id="user_mail" class="form-content__input" placeholder="millesabord@mail.fr" required />
+                        <input type="email" name="user_mail" id="user_mail" class="form-content__input" placeholder="millesabord@mail.fr" minlength="5" maxlength="40" required />
                         <i id="mail-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                     <div class="form-content">
                         <label for="user_address" class="form-content__label">Adresse :</label>
-                        <input type="text" name="user_address" id="user_address" class="form-content__input" placeholder="1 rue de Moulinsart" required />
+                        <input type="text" name="user_address" id="user_address" class="form-content__input" placeholder="1 rue de Moulinsart" minlength="5" maxlength="60" required />
                         <i id="address-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                     <div class="form-content">
                         <label for="user_postcode" class="form-content__label">Code postal :</label>
-                        <input type="text" name="user_postcode" id="user_postcode" class="form-content__input" placeholder="75000"  required />
+                        <input type="text" name="user_postcode" id="user_postcode" class="form-content__input" placeholder="75000" minlength="5" maxlength="5"  required />
                         <i id="postcode-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                     <div class="form-content">
                         <label for="user_city" class="form-content__label">Ville :</label>
-                        <input type="text" name="user_town" id="user_city" class="form-content__input" placeholder="Paris" required />
+                        <input type="text" name="user_town" id="user_city" class="form-content__input" placeholder="Paris" minlength="3" maxlength="30" required />
                         <i id="city-valid" class="form-content__icon fas fa-check-circle"></i>
                     </div>
                 </form>

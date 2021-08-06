@@ -1,6 +1,6 @@
 const productsOnLocaleStorage = JSON.parse(localStorage.getItem('viewCartProduct'));
 let cartInfo = document.getElementById('cart-info');
-productsOnLocaleStorage == null ? cartInfo.style.display = 'flex' : cartInfo.style.display = 'none';
+(productsOnLocaleStorage == null) || (productsOnLocaleStorage.length === 0) ? cartInfo.style.display = 'flex' : cartInfo.style.display = 'none';
 let sumProductsPriceStorage = 0;
 
 

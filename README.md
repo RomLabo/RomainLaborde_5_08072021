@@ -26,9 +26,21 @@ Choix à faire entre les 3 propositions suivantes :
     ● ours en peluche faits à la main ;
     ● caméras vintage ;
     ● meubles en chêne.
+J'ai fait le choix des caméras vintage pour ce projet.
 
 Technologies utilisées
     
     HTML, CSS, JavaScript.
 
-    
+Conditions Préalables
+
+Vous devrez avoir installé Node et `npm` localement sur votre machine.
+
+Installation
+
+Clonez ce repo. À partir du dossier "backEnd", exécutez `npm install`. 
+Vous pouvez ensuite exécuter le serveur avec `node server`.
+Le serveur doit s’exécuter sur le `localhost` avec le port par défaut `3000`. 
+Si le serveur tourne sur un autre port pour une raison quelconque, 
+celui ci sera stipuler lors du démarrage du server, p.ex `Listening on port 3001`.
+
