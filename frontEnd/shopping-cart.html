@@ -47,16 +47,16 @@
                             <td id="quantityStor" class="cart-product__quantity"></td>
                             <td id="optionStor" class="cart-product__price"></td>
                             <td id="priceStor" class="cart-product__price"></td>
-                            <td class="cart-product__btn"><button id="remove-item" name="Remove" class="remove"><i class="fas fa-times"></i></button></td>
+                            <td class="cart-product__btn"><button id="remove-item" name="Remove" class="remove" title="Supprimer"><i class="fas fa-times"></i></button></td>
                         </tr>
                     </template>
                 </table>
                 <button id="remove-products" type="button" class="footer-list__item">Vider le panier</button>
             </section>
-            <section class="section">
+            <div class="section">
                 <div id="sumPriceProducts"></div>
                 <form id="form" class="form" action="/ma-page-de-traitement" method="post">
-                    <input id="input-detect" type="hidden" name="user_vide" name="user_vide" value="">
+                    <input id="input-detect" type="hidden" name="user_vide" value="">
                     <div class="form-content">
                         <label for="user_name" class="form-content__label">Nom :</label>
                         <input type="text" name="user_name" id="user_name" class="form-content__input" placeholder="Haddock" minlength="3" maxlength="30" required />
@@ -89,8 +89,8 @@
                     </div>
                 </form>
                 <p class="section__text">Appuyer sur ENTREE pour valider le formulaire.</p>
-                <button type="button" id="purchase-btn" title="Commander" class="footer-list__item" disabled>Commander</button>
-            </section>
+                <button type="button" id="purchase-btn" title="Passer la commande" class="footer-list__item" disabled>Commander</button>
+            </div>
         </main>
 
         <!-- Footer -->
