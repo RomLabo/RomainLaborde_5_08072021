@@ -5,6 +5,9 @@ Projet 5 de la formation Développeur web de chez Openclassrooms.
 Pour ce projet il nous est demandé de construire le MVP d'un site e-commerce en utilisant JavaScript
 pour convaincre de futurs investisseurs de miser sur votre entreprise !
 
+## Démo du site terminé
+![](./Demo_du_site.gif)
+
 Voir les [spécifications](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P5/P5_Spe%CC%81cifications+fonctionnelles+Orinoco.pdf)
 
 ## Architecture générale
