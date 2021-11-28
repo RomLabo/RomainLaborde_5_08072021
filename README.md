@@ -8,9 +8,9 @@ pour convaincre de futurs investisseurs de miser sur votre entreprise !
 ## Démo du site terminé
 ![](./Demo_du_site.gif)
 
-Voir les [spécifications](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P5/P5_Spe%CC%81cifications+fonctionnelles+Orinoco.pdf)
-
 ## Architecture générale
+
+Voir les [spécifications](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DWJ_FR_P5/P5_Spe%CC%81cifications+fonctionnelles+Orinoco.pdf)
 
 ### L’application web sera composée de 4 pages :
 * Une page de vue sous forme de liste, montrant tous les articles disponibles
